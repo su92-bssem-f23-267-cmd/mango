@@ -1,0 +1,162 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum Role {
+  ADMIN
+  USER
+}
+
+model User {
+  id            String         @id @default(cuid())
+  name          String
+  email         String         @unique
+  password      String
+  role          Role           @default(USER)
+  orders        Order[]
+  addresses     Address[]
+  inventoryLogs InventoryLog[]
+  wishlists     Wishlist[]
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+}
+
+model Category {
+  id          String    @id @default(uuid())
+  name        String
+  slug        String    @unique
+  description String?
+  image       String?
+  products    Product[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model Product {
+  id          String      @id @default(uuid())
+  name        String
+  slug        String      @unique
+  description String
+  price       Float
+  stock       Int
+  rating      Float       @default(0.0)
+  image       String
+  categoryId  String
+  category    Category    @relation(fields: [categoryId], references: [id])
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+}
+
+enum OrderStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  DISPATCHED
+  DELIVERED
+}
+
+enum PaymentMethod {
+  COD
+}
+
+model Address {
+  id          String   @id @default(cuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
+  fullName    String
+  mobile      String
+  whatsApp    String?
+  address     String
+  area        String
+  orders      Order[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Order {
+  id            String        @id @default(cuid())
+  userId        String
+  user          User          @relation(fields: [userId], references: [id])
+  addressId     String
+  address       Address       @relation(fields: [addressId], references: [id])
+  totalAmount   Decimal
+  status        OrderStatus   @default(PENDING)
+  paymentMethod PaymentMethod @default(COD)
+  notes         String?
+  adminRemarks  String?
+  createdAt     DateTime      @default(now())
+  orderItems    OrderItem[]
+}
+
+model OrderItem {
+  id        String   @id @default(uuid())
+  orderId   String
+  order     Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  mangoId   String
+  mango     Mango    @relation(fields: [mangoId], references: [id])
+  quantity  Int
+  price     Float
+}
+
+model Variety {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  description String?
+  isActive    Boolean  @default(true)
+  mangoes     Mango[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Mango {
+  id          String   @id @default(cuid())
+  name        String
+  description String
+  price       Decimal
+  stock       Int
+  image       String
+  varietyId     String
+  variety       Variety        @relation(fields: [varietyId], references: [id])
+  isActive      Boolean        @default(true)
+  inventoryLogs InventoryLog[]
+  wishlists     Wishlist[]
+  orderItems    OrderItem[]
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+}
+
+enum InventoryAction {
+  ADD
+  REMOVE
+  UPDATE
+}
+
+model InventoryLog {
+  id            String          @id @default(cuid())
+  mangoId       String
+  mango         Mango           @relation(fields: [mangoId], references: [id])
+  actionType    InventoryAction
+  oldStock      Int
+  newStock      Int
+  quantity      Int
+  note          String?
+  adminId       String
+  admin         User            @relation(fields: [adminId], references: [id])
+  createdAt     DateTime        @default(now())
+}
+
+model Wishlist {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  mangoId   String
+  mango     Mango    @relation(fields: [mangoId], references: [id])
+  createdAt DateTime @default(now())
+
+  @@unique([userId, mangoId])
+}
