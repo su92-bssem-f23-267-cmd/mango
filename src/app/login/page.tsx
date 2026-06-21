@@ -115,16 +115,7 @@ function LoginForm() {
             </Button>
           </form>
 
-          {/* Quick tips login */}
-          <div className="bg-secondary/40 border border-border/80 p-3 rounded-lg mt-6 space-y-1">
-            <p className="text-[10px] font-bold text-primary uppercase tracking-wide">Demo Accounts Available:</p>
-            <p className="text-[10px] text-muted-foreground">
-              Admin: <strong className="text-foreground">admin@mangomart.com</strong> / password: <strong className="text-foreground">Admin123@</strong>
-            </p>
-            <p className="text-[10px] text-muted-foreground">
-              Customer: <strong className="text-foreground">user@mangomart.com</strong> / password: <strong className="text-foreground">User123@</strong>
-            </p>
-          </div>
+
         </CardContent>
         <CardFooter className="flex flex-col space-y-2 text-center text-xs text-muted-foreground border-t border-border pt-4">
           <p>
