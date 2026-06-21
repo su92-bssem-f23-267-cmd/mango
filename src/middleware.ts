@@ -1,32 +1,7 @@
-import { auth } from "@/lib/auth"
+import NextAuth from 'next-auth'
+import { authConfig } from '@/lib/auth.config'
 
-export default auth((req) => {
-  const { nextUrl } = req
-  const isLoggedIn = !!req.auth
-  const role = req.auth?.user?.role
-
-  const isAdminRoute = nextUrl.pathname.startsWith('/admin')
-  const isProtectedRoute = nextUrl.pathname.startsWith('/profile') || 
-                           nextUrl.pathname.startsWith('/orders') || 
-                           nextUrl.pathname === '/checkout'
-
-  if (isAdminRoute) {
-    if (!isLoggedIn || role !== 'ADMIN') {
-      return Response.redirect(new URL('/', nextUrl))
-    }
-  }
-
-  if (isProtectedRoute) {
-    if (!isLoggedIn) {
-      const loginUrl = new URL('/login', nextUrl)
-      // Save original URL as callbackUrl
-      loginUrl.searchParams.set("callbackUrl", nextUrl.pathname)
-      return Response.redirect(loginUrl)
-    }
-  }
-
-  return
-})
+export default NextAuth(authConfig).auth
 
 export const config = {
   matcher: [

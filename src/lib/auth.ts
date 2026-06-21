@@ -1,7 +1,9 @@
 import NextAuth from 'next-auth'
 import Credentials from 'next-auth/providers/credentials'
+import { authConfig } from './auth.config'
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
+  ...authConfig,
   providers: [
     Credentials({
       name: 'Credentials',
@@ -16,7 +18,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
 
         const email = String(credentials.email).toLowerCase()
         
-        // Dynamically import db and bcryptjs to ensure middleware compatibility with Edge runtime
+        // Dynamically import db and bcryptjs to keep them out of edge bundles
         const { default: db } = await import('@/lib/db')
         const bcrypt = await import('bcryptjs')
 
@@ -43,25 +45,6 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       }
     })
   ],
-  callbacks: {
-    async jwt({ token, user }) {
-      if (user) {
-        token.id = user.id
-        token.role = (user as import("next-auth").User).role
-      }
-      return token
-    },
-    async session({ session, token }) {
-      if (session.user) {
-        session.user.id = token.id as string
-        session.user.role = token.role as import("@prisma/client").Role
-      }
-      return session
-    }
-  },
-  pages: {
-    signIn: '/login',
-  },
   session: {
     strategy: 'jwt',
   },
