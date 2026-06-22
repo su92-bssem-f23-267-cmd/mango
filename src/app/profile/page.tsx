@@ -176,7 +176,7 @@ export default async function ProfilePage() {
                       </div>
 
                       <div className="flex justify-between items-center pt-2">
-                        <span className="text-[10px] text-muted-foreground">Delivery Sector: {order.address.area}</span>
+                        <span className="text-[10px] text-muted-foreground">City: {order.address.city}</span>
                         <span className="text-sm font-black text-primary">
                           Total: Rs. {Number(order.totalAmount).toLocaleString()}
                         </span>

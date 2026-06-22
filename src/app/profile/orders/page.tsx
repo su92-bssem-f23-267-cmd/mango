@@ -126,8 +126,8 @@ export default function UserOrdersPage() {
                   <div className="lg:col-span-3 space-y-2 text-xs border-t lg:border-t-0 lg:border-l lg:border-r border-border/60 pt-4 lg:pt-0 lg:px-6">
                     <h4 className="text-xs font-bold uppercase tracking-wider text-foreground mb-2">Delivery Address</h4>
                     <p><span className="text-muted-foreground">Name:</span> <strong className="text-foreground">{order.address.fullName}</strong></p>
-                    <p><span className="text-muted-foreground">Mobile:</span> <strong className="text-foreground">{order.address.mobile}</strong></p>
-                    <p><span className="text-muted-foreground">Area:</span> <strong className="text-primary font-bold">{order.address.area}</strong></p>
+                    <p><span className="text-muted-foreground">Mobile:</span> <strong className="text-foreground">{order.address.mobileNumber}</strong></p>
+                    <p><span className="text-muted-foreground">City:</span> <strong className="text-primary font-bold">{order.address.city}</strong></p>
                     <p className="leading-relaxed"><span className="text-muted-foreground">Address:</span> <span className="text-foreground">{order.address.address}</span></p>
                   </div>
 

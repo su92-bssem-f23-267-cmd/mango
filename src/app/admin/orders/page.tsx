@@ -55,9 +55,9 @@ export default function AdminOrdersPage() {
       result = result.filter(o => 
         o.id.toLowerCase().includes(q) ||
         o.address.fullName.toLowerCase().includes(q) ||
-        o.address.mobile.includes(q) ||
+        o.address.mobileNumber.includes(q) ||
         o.address.address.toLowerCase().includes(q) ||
-        o.address.area.toLowerCase().includes(q)
+        o.address.city.toLowerCase().includes(q)
       )
     }
 
@@ -141,7 +141,7 @@ export default function AdminOrdersPage() {
       <div className="relative max-w-md">
         <Input
           type="text"
-          placeholder="Search by customer, mobile, area, or ID..."
+          placeholder="Search by customer, mobile, city, or ID..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           className="pl-9 text-xs"
@@ -163,136 +163,129 @@ export default function AdminOrdersPage() {
           </CardContent>
         </Card>
       ) : (
-        <div className="space-y-4">
-          {filteredOrders.map((order) => (
-            <Card key={order.id} className="overflow-hidden border-l-4 border-l-primary/60 shadow-sm">
-              <div className="bg-secondary/10 px-6 py-4 border-b border-border/40 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-                <div className="space-y-1">
-                  <div className="flex items-center gap-2">
-                    <span className="text-xs font-black text-primary select-all">#{order.id}</span>
-                    {getStatusBadge(order.status)}
-                    <span className="text-[10px] bg-secondary text-muted-foreground px-2 py-0.5 rounded font-bold uppercase tracking-wider">
-                      {order.paymentMethod}
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-4 text-[11px] text-muted-foreground">
-                    <span className="flex items-center gap-1"><Calendar className="h-3 w-3" /> {new Date(order.createdAt).toLocaleString()}</span>
-                  </div>
-                </div>
-
-                {/* Status action buttons */}
-                <div className="flex flex-wrap gap-2">
-                  {order.status === 'PENDING' && (
-                    <>
-                      <Button
-                        size="sm"
-                        onClick={() => handleStatusUpdate(order.id, 'APPROVED')}
-                        disabled={updatingId === order.id}
-                        className="bg-emerald-600 hover:bg-emerald-700 text-xs font-bold flex items-center gap-1"
-                      >
-                        <CheckCircle className="h-3.5 w-3.5" /> Approve
-                      </Button>
-                      <Button
-                        size="sm"
-                        variant="destructive"
-                        onClick={() => handleStatusUpdate(order.id, 'REJECTED')}
-                        disabled={updatingId === order.id}
-                        className="text-xs font-bold flex items-center gap-1"
-                      >
-                        <XCircle className="h-3.5 w-3.5" /> Reject
-                      </Button>
-                    </>
-                  )}
-                  {order.status === 'APPROVED' && (
-                    <Button
-                      size="sm"
-                      onClick={() => handleStatusUpdate(order.id, 'DISPATCHED')}
-                      disabled={updatingId === order.id}
-                      className="bg-purple-600 hover:bg-purple-700 text-xs font-bold flex items-center gap-1"
-                    >
-                      <Truck className="h-3.5 w-3.5" /> Mark Dispatched
-                    </Button>
-                  )}
-                  {order.status === 'DISPATCHED' && (
-                    <Button
-                      size="sm"
-                      onClick={() => handleStatusUpdate(order.id, 'DELIVERED')}
-                      disabled={updatingId === order.id}
-                      className="bg-emerald-600 hover:bg-emerald-700 text-xs font-bold flex items-center gap-1"
-                    >
-                      <CheckCircle className="h-3.5 w-3.5" /> Mark Delivered
-                    </Button>
-                  )}
-                </div>
-              </div>
-
-              <CardContent className="p-6">
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-                  {/* Customer shipping details */}
-                  <div className="lg:col-span-5 space-y-3 border-b lg:border-b-0 lg:border-r border-border/60 pb-4 lg:pb-0 lg:pr-6">
-                    <h4 className="text-xs font-bold uppercase tracking-wider text-foreground flex items-center gap-1.5">
-                      <User className="h-3.5 w-3.5 text-primary" /> Customer Info
-                    </h4>
-                    <div className="space-y-2 text-xs">
-                      <p><span className="text-muted-foreground">Name:</span> <strong className="text-foreground">{order.address.fullName}</strong></p>
-                      <p className="flex items-center gap-2"><span className="text-muted-foreground">Mobile:</span> <strong className="text-foreground">{order.address.mobile}</strong></p>
-                      {order.address.whatsApp && (
-                        <p><span className="text-muted-foreground">WhatsApp:</span> <strong className="text-foreground">{order.address.whatsApp}</strong></p>
-                      )}
-                      <p className="flex items-start gap-1"><MapPin className="h-3.5 w-3.5 text-primary shrink-0 mt-0.5" /> <span><strong className="text-foreground font-semibold">[{order.address.area}]</strong> {order.address.address}</span></p>
+        <div className="overflow-x-auto rounded-xl border border-border bg-card">
+          <table className="w-full border-collapse text-left text-xs">
+            <thead>
+              <tr className="border-b border-border bg-secondary/50 font-bold uppercase tracking-wider text-muted-foreground">
+                <th className="p-4">Customer Name</th>
+                <th className="p-4">Mobile Number</th>
+                <th className="p-4">City</th>
+                <th className="p-4">Address</th>
+                <th className="p-4">Ordered Product</th>
+                <th className="p-4">Status</th>
+                <th className="p-4">Date</th>
+                <th className="p-4 text-right">Actions</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-border/60">
+              {filteredOrders.map((order) => (
+                <tr key={order.id} className="hover:bg-secondary/20 transition-colors">
+                  <td className="p-4 font-semibold text-foreground">
+                    <div className="space-y-0.5">
+                      <div>{order.address.fullName}</div>
+                      <div className="text-[10px] text-muted-foreground select-all">#{order.id}</div>
                     </div>
-                  </div>
-
-                  {/* Items description */}
-                  <div className="lg:col-span-4 space-y-3">
-                    <h4 className="text-xs font-bold uppercase tracking-wider text-foreground flex items-center gap-1.5">
-                      <ShoppingBag className="h-3.5 w-3.5 text-primary" /> Purchased Items
-                    </h4>
-                    <div className="space-y-2 text-xs">
+                  </td>
+                  <td className="p-4 text-muted-foreground">
+                    <div className="space-y-1">
+                      <div>{order.address.mobileNumber}</div>
+                      {order.address.whatsapp && (
+                        <div className="text-[10px] text-emerald-600 font-medium">WA: {order.address.whatsapp}</div>
+                      )}
+                    </div>
+                  </td>
+                  <td className="p-4 text-foreground font-semibold">
+                    {order.address.city}
+                  </td>
+                  <td className="p-4 text-muted-foreground max-w-xs truncate" title={order.address.address}>
+                    {order.address.address}
+                  </td>
+                  <td className="p-4 text-muted-foreground">
+                    <div className="space-y-1">
                       {order.orderItems.map((item: any) => (
-                        <div key={item.id} className="flex justify-between items-center text-muted-foreground">
-                          <span>
-                            <strong className="text-foreground">{item.mango?.name || 'Mango Box'}</strong> (10KG Box)
-                          </span>
-                          <span className="font-bold text-foreground">
-                            x{item.quantity}
-                          </span>
+                        <div key={item.id}>
+                          <strong className="text-foreground">{item.mango?.name || 'Mango Box'}</strong>{' '}
+                          <span className="text-[10px]">x{item.quantity}</span>
                         </div>
                       ))}
-                      <div className="border-t border-border/40 pt-2 flex justify-between items-center font-black text-primary text-sm">
-                        <span>Total Price</span>
-                        <span>Rs. {Number(order.totalAmount).toLocaleString()}</span>
+                    </div>
+                  </td>
+                  <td className="p-4">
+                    {getStatusBadge(order.status)}
+                  </td>
+                  <td className="p-4 text-muted-foreground whitespace-nowrap">
+                    {new Date(order.createdAt).toLocaleDateString()}
+                  </td>
+                  <td className="p-4">
+                    <div className="flex flex-col gap-2 items-end">
+                      {/* Status Actions */}
+                      <div className="flex gap-1">
+                        {order.status === 'PENDING' && (
+                          <>
+                            <Button
+                              size="xs"
+                              onClick={() => handleStatusUpdate(order.id, 'APPROVED')}
+                              disabled={updatingId === order.id}
+                              className="bg-emerald-600 hover:bg-emerald-700 text-[10px] font-bold py-1 px-2 h-7"
+                            >
+                              Approve
+                            </Button>
+                            <Button
+                              size="xs"
+                              variant="destructive"
+                              onClick={() => handleStatusUpdate(order.id, 'REJECTED')}
+                              disabled={updatingId === order.id}
+                              className="text-[10px] font-bold py-1 px-2 h-7"
+                            >
+                              Reject
+                            </Button>
+                          </>
+                        )}
+                        {order.status === 'APPROVED' && (
+                          <Button
+                            size="xs"
+                            onClick={() => handleStatusUpdate(order.id, 'DISPATCHED')}
+                            disabled={updatingId === order.id}
+                            className="bg-purple-600 hover:bg-purple-700 text-[10px] font-bold py-1 px-2 h-7"
+                          >
+                            Dispatch
+                          </Button>
+                        )}
+                        {order.status === 'DISPATCHED' && (
+                          <Button
+                            size="xs"
+                            onClick={() => handleStatusUpdate(order.id, 'DELIVERED')}
+                            disabled={updatingId === order.id}
+                            className="bg-emerald-600 hover:bg-emerald-700 text-[10px] font-bold py-1 px-2 h-7"
+                          >
+                            Deliver
+                          </Button>
+                        )}
+                      </div>
+                      {/* Remarks/Notes */}
+                      <div className="flex gap-1 items-center w-full max-w-[200px]">
+                        <input
+                          type="text"
+                          placeholder="Notes..."
+                          value={remarksInputs[order.id] || ''}
+                          onChange={(e) => setRemarksInputs(prev => ({ ...prev, [order.id]: e.target.value }))}
+                          className="w-full text-[10px] p-1 bg-secondary/30 rounded border border-border focus:outline-none h-6"
+                        />
+                        <Button
+                          size="xs"
+                          variant="outline"
+                          onClick={() => handleRemarksSave(order.id)}
+                          className="text-[9px] h-6 px-1.5 font-bold cursor-pointer"
+                        >
+                          Save
+                        </Button>
                       </div>
                     </div>
-                  </div>
-
-                  {/* Admin notes remarks */}
-                  <div className="lg:col-span-3 space-y-3">
-                    <h4 className="text-xs font-bold uppercase tracking-wider text-foreground flex items-center gap-1.5">
-                      <Clipboard className="h-3.5 w-3.5 text-primary" /> Admin Remarks
-                    </h4>
-                    <div className="space-y-2">
-                      <textarea
-                        rows={2}
-                        placeholder="Add delivery notes, driver instructions..."
-                        value={remarksInputs[order.id] || ''}
-                        onChange={(e) => setRemarksInputs(prev => ({ ...prev, [order.id]: e.target.value }))}
-                        className="w-full text-xs p-2 bg-secondary/30 rounded border border-border resize-none focus:outline-none focus:ring-1 focus:ring-primary"
-                      />
-                      <Button
-                        size="sm"
-                        variant="outline"
-                        onClick={() => handleRemarksSave(order.id)}
-                        className="w-full text-[10px] h-7 font-bold uppercase tracking-wider cursor-pointer"
-                      >
-                        Save Notes
-                      </Button>
-                    </div>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       )}
     </div>

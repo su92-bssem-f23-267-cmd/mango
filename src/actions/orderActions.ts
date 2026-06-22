@@ -14,10 +14,10 @@ interface OrderItemInput {
 
 interface CreateOrderInput {
   fullName: string
-  mobile: string
-  whatsApp?: string | null
+  mobileNumber: string
+  whatsapp?: string | null
   address: string
-  area: string
+  city: string
   notes?: string | null
   items: OrderItemInput[]
 }
@@ -42,10 +42,11 @@ export async function createOrder(data: CreateOrderInput) {
         data: {
           userId,
           fullName: data.fullName,
-          mobile: data.mobile,
-          whatsApp: data.whatsApp || null,
+          mobileNumber: data.mobileNumber,
+          whatsapp: data.whatsapp || null,
           address: data.address,
-          area: data.area,
+          city: data.city,
+          notes: data.notes || null,
         }
       })
 

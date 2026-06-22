@@ -45,14 +45,10 @@ export function Footer() {
 
           {/* Delivery Areas */}
           <div className="space-y-3">
-            <h4 className="text-xs font-bold uppercase tracking-wider text-foreground">We deliver premium mango boxes to:</h4>
+            <h4 className="text-xs font-bold uppercase tracking-wider text-foreground">Our Branches at</h4>
             <ul className="space-y-1.5 text-xs text-muted-foreground font-semibold">
-              <li>F-6</li>
-              <li>F-7</li>
-              <li>F-8</li>
-              <li>F-9</li>
-              <li>DHA Islamabad</li>
-              <li>Bahria Town Rawalpindi</li>
+              <li>Islamabad</li>
+              <li>Rawalpindi</li>
             </ul>
           </div>
 
@@ -66,7 +62,7 @@ export function Footer() {
               </li>
               <li className="flex items-center gap-2">
                 <Phone className="h-4 w-4 text-primary shrink-0" />
-                <a href="tel:+923066662974" className="hover:text-accent transition">+92 306 6662974</a>
+                <a href="tel:+923056662974" className="hover:text-accent transition">+92 305 6662974</a>
               </li>
               <li className="flex items-center gap-2">
                 <Mail className="h-4 w-4 text-primary shrink-0" />

@@ -23,7 +23,14 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         const bcrypt = await import('bcryptjs')
 
         const user = await db.user.findUnique({
-          where: { email }
+          where: { email },
+          select: {
+            id: true,
+            name: true,
+            email: true,
+            password: true,
+            role: true,
+          }
         })
 
         if (!user) {
@@ -36,11 +43,17 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           return null
         }
 
+        // Restrict admin access to jamsubhasadiq125@gmail.com only
+        let userRole = user.role
+        if (userRole === 'ADMIN' && email !== 'jamsubhasadiq125@gmail.com') {
+          userRole = 'USER'
+        }
+
         return {
           id: user.id,
           name: user.name,
           email: user.email,
-          role: user.role
+          role: userRole
         }
       }
     })

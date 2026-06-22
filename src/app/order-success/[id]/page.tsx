@@ -76,7 +76,7 @@ export default async function OrderSuccessPage(props: OrderSuccessPageProps) {
             </div>
             <div className="flex items-start gap-2">
               <MapPin className="h-3.5 w-3.5 text-foreground/75 mt-0.5 shrink-0" />
-              <span>Address: <strong className="text-foreground">{order.address.address}, {order.address.area}</strong></span>
+              <span>Address: <strong className="text-foreground">{order.address.address}, {order.address.city}</strong></span>
             </div>
           </CardContent>
         </Card>

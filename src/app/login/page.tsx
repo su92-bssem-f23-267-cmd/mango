@@ -39,11 +39,8 @@ function LoginForm() {
       } else {
         toast.success('Successfully logged in! Welcome back.')
         
-        // Fetch session to determine role-based redirect
-        const sessionRes = await fetch('/api/auth/session')
-        const session = await sessionRes.json()
-        
-        if (session?.user?.role === 'ADMIN') {
+        // Instant redirect depending on email to avoid slow session fetch API call
+        if (email.trim().toLowerCase() === 'jamsubhasadiq125@gmail.com') {
           router.push('/admin/dashboard')
         } else {
           router.push(callbackUrl)

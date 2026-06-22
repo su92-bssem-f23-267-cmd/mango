@@ -65,17 +65,18 @@ enum PaymentMethod {
 }
 
 model Address {
-  id          String   @id @default(cuid())
-  userId      String
-  user        User     @relation(fields: [userId], references: [id])
-  fullName    String
-  mobile      String
-  whatsApp    String?
-  address     String
-  area        String
-  orders      Order[]
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id            String   @id @default(cuid())
+  userId        String
+  user          User     @relation(fields: [userId], references: [id])
+  fullName      String
+  mobileNumber  String
+  whatsapp      String?
+  address       String
+  city          String
+  notes         String?
+  orders        Order[]
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 }
 
 model Order {

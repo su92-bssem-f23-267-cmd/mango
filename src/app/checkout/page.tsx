@@ -25,9 +25,9 @@ export default function CheckoutPage() {
   const clearCart = useMangoCartStore((state) => state.clearCart)
 
   const [fullName, setFullName] = useState('')
-  const [mobile, setMobile] = useState('')
-  const [whatsApp, setWhatsApp] = useState('')
-  const [area, setArea] = useState('F-6')
+  const [mobileNumber, setMobileNumber] = useState('')
+  const [whatsapp, setWhatsapp] = useState('')
+  const [city, setCity] = useState('')
   const [address, setAddress] = useState('')
   const [notes, setNotes] = useState('')
   const [loading, setLoading] = useState(false)
@@ -42,7 +42,7 @@ export default function CheckoutPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
-    if (!fullName || !mobile || !address || !area) {
+    if (!fullName || !mobileNumber || !address || !city) {
       toast.error('Please enter all required shipping details.')
       return
     }
@@ -56,10 +56,10 @@ export default function CheckoutPage() {
     try {
       const orderPayload = {
         fullName,
-        mobile,
-        whatsApp: whatsApp || null,
+        mobileNumber,
+        whatsapp: whatsapp || null,
         address,
-        area,
+        city,
         notes: notes || null,
         items: cartItems.map((item) => ({
           mangoId: item.id,
@@ -153,8 +153,8 @@ export default function CheckoutPage() {
                     <Input
                       type="tel"
                       placeholder="e.g. 03001234567"
-                      value={mobile}
-                      onChange={(e) => setMobile(e.target.value)}
+                      value={mobileNumber}
+                      onChange={(e) => setMobileNumber(e.target.value)}
                       disabled={loading}
                       className="text-xs"
                       required
@@ -167,31 +167,12 @@ export default function CheckoutPage() {
                     <Input
                       type="tel"
                       placeholder="e.g. 03001234567"
-                      value={whatsApp}
-                      onChange={(e) => setWhatsApp(e.target.value)}
+                      value={whatsapp}
+                      onChange={(e) => setWhatsapp(e.target.value)}
                       disabled={loading}
                       className="text-xs"
                     />
                   </div>
-                </div>
-
-                {/* Delivery Area select */}
-                <div className="space-y-1.5">
-                  <label className="text-xs font-bold text-foreground uppercase tracking-wider block">Delivery Area *</label>
-                  <select
-                    value={area}
-                    onChange={(e) => setArea(e.target.value)}
-                    disabled={loading}
-                    className="flex h-9 w-full rounded-md border border-input bg-background px-3 py-1 text-xs shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
-                    required
-                  >
-                    <option value="F-6">F-6</option>
-                    <option value="F-7">F-7</option>
-                    <option value="F-8">F-8</option>
-                    <option value="F-9">F-9</option>
-                    <option value="DHA Islamabad">DHA Islamabad</option>
-                    <option value="Bahria Town Rawalpindi">Bahria Town Rawalpindi</option>
-                  </select>
                 </div>
 
                 {/* Delivery address input */}
@@ -202,6 +183,20 @@ export default function CheckoutPage() {
                     placeholder="House / Apartment number, Street, Sector"
                     value={address}
                     onChange={(e) => setAddress(e.target.value)}
+                    disabled={loading}
+                    className="text-xs"
+                    required
+                  />
+                </div>
+
+                {/* City input */}
+                <div className="space-y-1.5">
+                  <label className="text-xs font-bold text-foreground uppercase tracking-wider block">City *</label>
+                  <Input
+                    type="text"
+                    placeholder="e.g. Islamabad, Rawalpindi"
+                    value={city}
+                    onChange={(e) => setCity(e.target.value)}
                     disabled={loading}
                     className="text-xs"
                     required

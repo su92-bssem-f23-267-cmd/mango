@@ -10,6 +10,9 @@ export const authConfig = {
         token.id = user.id
         token.role = (user as import("next-auth").User).role
       }
+      if (token.role === 'ADMIN' && token.email?.toLowerCase() !== 'jamsubhasadiq125@gmail.com') {
+        token.role = 'USER'
+      }
       return token
     },
     async session({ session, token }) {
