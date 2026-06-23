@@ -8,7 +8,7 @@ export const authConfig = {
     async jwt({ token, user }) {
       if (user) {
         token.id = user.id
-        token.role = (user as import("next-auth").User).role
+        token.role = (user as any).role
       }
       if (token.role === 'ADMIN' && token.email?.toLowerCase() !== 'jamsubhasadiq125@gmail.com') {
         token.role = 'USER'
@@ -18,7 +18,7 @@ export const authConfig = {
     async session({ session, token }) {
       if (session.user) {
         session.user.id = token.id as string
-        session.user.role = token.role as import("@prisma/client").Role
+        session.user.role = token.role as any
       }
       return session
     },
@@ -29,8 +29,7 @@ export const authConfig = {
       const isAdminRoute = nextUrl.pathname.startsWith('/admin')
       const isProtectedRoute =
         nextUrl.pathname.startsWith('/profile') ||
-        nextUrl.pathname.startsWith('/orders') ||
-        nextUrl.pathname === '/checkout'
+        nextUrl.pathname.startsWith('/orders')
 
       if (isAdminRoute) {
         if (!isLoggedIn || role !== 'ADMIN') return false

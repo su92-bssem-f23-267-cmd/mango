@@ -68,12 +68,14 @@ export default async function OrderSuccessPage(props: OrderSuccessPageProps) {
           <CardContent className="pt-4 space-y-3 text-xs text-muted-foreground">
             <div className="flex items-center gap-2">
               <User className="h-3.5 w-3.5 text-foreground/75 shrink-0" />
-              <span>Recipient: <strong className="text-foreground">{order.user.name || order.address.fullName}</strong></span>
+              <span>Recipient: <strong className="text-foreground">{order.user?.name || order.address.fullName}</strong></span>
             </div>
-            <div className="flex items-center gap-2">
-              <Mail className="h-3.5 w-3.5 text-foreground/75 shrink-0" />
-              <span>Invoice Email: <strong className="text-foreground">{order.user.email}</strong></span>
-            </div>
+            {order.user?.email && (
+              <div className="flex items-center gap-2">
+                <Mail className="h-3.5 w-3.5 text-foreground/75 shrink-0" />
+                <span>Invoice Email: <strong className="text-foreground">{order.user.email}</strong></span>
+              </div>
+            )}
             <div className="flex items-start gap-2">
               <MapPin className="h-3.5 w-3.5 text-foreground/75 mt-0.5 shrink-0" />
               <span>Address: <strong className="text-foreground">{order.address.address}, {order.address.city}</strong></span>
@@ -144,13 +146,13 @@ export default async function OrderSuccessPage(props: OrderSuccessPageProps) {
       {/* Action buttons */}
       <div className="flex justify-center pt-2">
         <Link
-          href="/profile/orders"
+          href={order.userId ? "/profile/orders" : "/mangoes"}
           className={cn(
             buttonVariants({ size: "lg" }),
             "font-bold cursor-pointer shadow-sm flex items-center gap-2"
           )}
         >
-          Continue Shopping
+          {order.userId ? "View Your Orders" : "Continue Shopping"}
           <ArrowRight className="h-4 w-4" />
         </Link>
       </div>

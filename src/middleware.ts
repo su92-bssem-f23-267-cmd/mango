@@ -5,10 +5,9 @@ export default NextAuth(authConfig).auth
 
 export const config = {
   matcher: [
-    // Protect admin, profile, orders, and checkout routes
+    // Protect admin, profile, and orders routes
     '/admin/:path*',
     '/profile/:path*',
     '/orders/:path*',
-    '/checkout',
   ],
 }

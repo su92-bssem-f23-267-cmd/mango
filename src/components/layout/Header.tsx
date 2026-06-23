@@ -127,7 +127,7 @@ function HeaderContent() {
 
           {/* Cart Icon Drawer */}
           <Sheet open={cartOpen} onOpenChange={setCartOpen}>
-            <SheetTrigger render={<button className="relative cursor-pointer p-2 rounded-full hover:bg-secondary focus-visible:outline-none" />}>
+            <SheetTrigger className="relative cursor-pointer p-2 rounded-full hover:bg-secondary focus-visible:outline-none">
               <ShoppingBag className="h-5 w-5 text-foreground" />
               {mounted && totalItems > 0 && (
                 <Badge className="absolute -top-1 -right-1 h-5 w-5 justify-center rounded-full bg-accent text-accent-foreground p-0 text-[10px] font-bold border-2 border-background animate-pulse">
@@ -158,9 +158,13 @@ function HeaderContent() {
                       <p className="font-semibold text-foreground">Your cart is empty</p>
                       <p className="text-xs text-muted-foreground mt-1">Browse our store and add some delicious mangoes!</p>
                     </div>
-                    <SheetClose render={<Link href="/mangoes" className={cn(buttonVariants({ size: "sm" }), "mt-4 font-semibold text-xs cursor-pointer text-center justify-center flex items-center")} />}>
+                    <Link
+                      href="/mangoes"
+                      className={cn(buttonVariants({ size: "sm" }), "mt-4 font-semibold text-xs cursor-pointer text-center justify-center flex items-center")}
+                      onClick={() => setCartOpen(false)}
+                    >
                       Shop Now
-                    </SheetClose>
+                    </Link>
                   </div>
                 ) : (
                   <div className="space-y-4 pr-1">
@@ -224,7 +228,7 @@ function HeaderContent() {
                     >
                       Proceed to Checkout
                     </Link>
-                    <SheetClose render={<button className={cn(buttonVariants({ variant: "outline" }), "w-full font-semibold text-xs cursor-pointer")} />}>
+                    <SheetClose className={cn(buttonVariants({ variant: "outline" }), "w-full font-semibold text-xs cursor-pointer")}>
                       Continue Shopping
                     </SheetClose>
                   </div>

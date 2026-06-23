@@ -23,14 +23,7 @@ export default function CartPage() {
   const clearCart = useMangoCartStore((state) => state.clearCart)
 
   const handleCheckoutRedirect = () => {
-    if (!session?.user) {
-      toast.info('Sign In Required', {
-        description: 'You need to sign in or create an account before checking out.'
-      })
-      router.push('/login?callbackUrl=/checkout')
-    } else {
-      router.push('/checkout')
-    }
+    router.push('/checkout')
   }
 
   // Handle SSR Hydration Limits
