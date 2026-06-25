@@ -25,8 +25,10 @@ interface CreateOrderInput {
 export async function createOrder(data: CreateOrderInput) {
   try {
     const session = await auth()
-    const userId = session?.user?.id || null
-
+    const userId = session?.user?.id
+    if (!userId) {
+      throw new Error("User not authenticated")
+    }
     if (!data.items || data.items.length === 0) {
       return { error: 'Your cart is empty.' }
     }
