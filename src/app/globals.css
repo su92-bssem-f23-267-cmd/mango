@@ -49,38 +49,38 @@
 }
 
 :root {
-  --background: oklch(0.985 0.015 88); /* Luxurious warm vanilla-milk/cream background */
-  --foreground: oklch(0.12 0.035 150); /* Deep midnight forest emerald charcoal */
-  --card: oklch(1 0.005 88);          /* Clear ivory-white for cards */
-  --card-foreground: oklch(0.12 0.035 150);
-  --popover: oklch(1 0.005 88);
-  --popover-foreground: oklch(0.12 0.035 150);
-  --primary: oklch(0.26 0.08 145);    /* Premium Royal Jade/Emerald Green */
-  --primary-foreground: oklch(0.99 0.01 88);
-  --secondary: oklch(0.96 0.03 82);   /* Soft golden honey tint */
-  --secondary-foreground: oklch(0.26 0.08 145);
-  --muted: oklch(0.94 0.015 88);
-  --muted-foreground: oklch(0.38 0.03 145);
-  --accent: oklch(0.72 0.19 65);      /* Rich succulent glowing Mango Gold/Orange */
-  --accent-foreground: oklch(0.12 0.03 65);
-  --destructive: oklch(0.55 0.22 25);
-  --border: oklch(0.91 0.02 145);
-  --input: oklch(0.91 0.02 145);
-  --ring: oklch(0.72 0.19 65);
-  --chart-1: oklch(0.72 0.19 65);
-  --chart-2: oklch(0.26 0.08 145);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
+  --background: #F8FFFA;               /* Soft white → green tint background */
+  --foreground: #111827;               /* Dark text */
+  --card: #FFFFFF;                     /* Clean white cards */
+  --card-foreground: #111827;
+  --popover: #FFFFFF;
+  --popover-foreground: #111827;
+  --primary: #22C55E;                  /* Fruit Gala fresh green */
+  --primary-foreground: #FFFFFF;
+  --secondary: #ECFDF3;               /* Soft green surface (subtle UI role) */
+  --secondary-foreground: #16A34A;    /* Deep green text on soft surfaces */
+  --muted: #F1F6F3;
+  --muted-foreground: #6B7280;         /* Light text */
+  --accent: #F59E0B;                   /* Warm amber/orange accent */
+  --accent-foreground: #111827;
+  --destructive: #DC2626;
+  --border: #E3EBE6;
+  --input: #E3EBE6;
+  --ring: #22C55E;
+  --chart-1: #22C55E;
+  --chart-2: #F59E0B;
+  --chart-3: #16A34A;
+  --chart-4: #84CC16;
+  --chart-5: #0EA5E9;
   --radius: 0.85rem;
-  --sidebar: oklch(0.985 0.01 88);
-  --sidebar-foreground: oklch(0.12 0.035 150);
-  --sidebar-primary: oklch(0.26 0.08 145);
-  --sidebar-primary-foreground: oklch(0.985 0.01 88);
-  --sidebar-accent: oklch(0.95 0.02 88);
-  --sidebar-accent-foreground: oklch(0.26 0.08 145);
-  --sidebar-border: oklch(0.92 0.01 145);
-  --sidebar-ring: oklch(0.72 0.19 65);
+  --sidebar: #F8FFFA;
+  --sidebar-foreground: #111827;
+  --sidebar-primary: #22C55E;
+  --sidebar-primary-foreground: #FFFFFF;
+  --sidebar-accent: #ECFDF3;
+  --sidebar-accent-foreground: #16A34A;
+  --sidebar-border: #E3EBE6;
+  --sidebar-ring: #22C55E;
 }
 
 .dark {
@@ -90,31 +90,31 @@
   --card-foreground: oklch(0.98 0.01 88);
   --popover: oklch(0.14 0.03 145);
   --popover-foreground: oklch(0.98 0.01 88);
-  --primary: oklch(0.85 0.09 145);     /* Brilliant fresh mint green */
-  --primary-foreground: oklch(0.11 0.025 145);
+  --primary: #34D399;                  /* Brilliant fresh green for dark mode */
+  --primary-foreground: #052E16;
   --secondary: oklch(0.16 0.03 145);
   --secondary-foreground: oklch(0.98 0.01 88);
   --muted: oklch(0.16 0.03 145);
   --muted-foreground: oklch(0.72 0.02 145);
-  --accent: oklch(0.76 0.19 68);       /* Brilliant glowing ripe mango gold */
-  --accent-foreground: oklch(0.11 0.025 68);
+  --accent: #FBBF24;                   /* Glowing amber accent */
+  --accent-foreground: #1A1206;
   --destructive: oklch(0.68 0.18 25);
   --border: oklch(0.21 0.03 145);
   --input: oklch(0.21 0.03 145);
-  --ring: oklch(0.76 0.19 68);
-  --chart-1: oklch(0.76 0.19 68);
-  --chart-2: oklch(0.85 0.09 145);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
+  --ring: #34D399;
+  --chart-1: #34D399;
+  --chart-2: #FBBF24;
+  --chart-3: #22C55E;
+  --chart-4: #84CC16;
+  --chart-5: #38BDF8;
   --sidebar: oklch(0.13 0.03 145);
   --sidebar-foreground: oklch(0.98 0.01 88);
-  --sidebar-primary: oklch(0.85 0.09 145);
-  --sidebar-primary-foreground: oklch(0.11 0.025 145);
+  --sidebar-primary: #34D399;
+  --sidebar-primary-foreground: #052E16;
   --sidebar-accent: oklch(0.16 0.03 145);
   --sidebar-accent-foreground: oklch(0.98 0.01 88);
   --sidebar-border: oklch(0.21 0.03 145);
-  --sidebar-ring: oklch(0.76 0.19 68);
+  --sidebar-ring: #34D399;
 }
 
 @layer utilities {
@@ -274,6 +274,57 @@
   @media (hover: hover) {
     .glow-mango-hover:hover {
       box-shadow: 0 0 25px 4px rgba(245, 158, 11, 0.18);
+    }
+  }
+
+  /* Fruit Gala gradient utilities */
+  .gradient-green {
+    background-image: linear-gradient(135deg, #22C55E 0%, #84CC16 100%);
+  }
+  .gradient-amber {
+    background-image: linear-gradient(135deg, #F59E0B 0%, #FBBF24 100%);
+  }
+  .gradient-soft-green {
+    background-image: linear-gradient(160deg, #FFFFFF 0%, #ECFDF3 100%);
+  }
+  .text-gradient-green {
+    background-image: linear-gradient(135deg, #16A34A 0%, #22C55E 50%, #84CC16 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* Premium green glow for primary actions */
+  .glow-green {
+    box-shadow: 0 8px 24px -6px rgba(34, 197, 94, 0.45);
+  }
+  @media (hover: hover) {
+    .glow-green-hover:hover {
+      box-shadow: 0 12px 30px -6px rgba(34, 197, 94, 0.55);
+    }
+  }
+
+  /* Safe-area padding for the mobile bottom navigation */
+  .pb-safe {
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  .mb-safe-nav {
+    margin-bottom: calc(4.5rem + env(safe-area-inset-bottom, 0px));
+  }
+
+  /* Reveal-on-scroll fallback animation */
+  @keyframes reveal-up {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .reveal-up {
+    animation: reveal-up 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .animate-float-3d,
+    .reveal-up {
+      animation: none;
     }
   }
 }

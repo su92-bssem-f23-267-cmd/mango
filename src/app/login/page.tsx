@@ -77,7 +77,7 @@ function LoginForm() {
               <div className="relative">
                 <Input
                   type="email"
-                  placeholder="demo@mangomart.com"
+                  placeholder="you@fruitgala.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   disabled={loading}
@@ -116,7 +116,7 @@ function LoginForm() {
         </CardContent>
         <CardFooter className="flex flex-col space-y-2 text-center text-xs text-muted-foreground border-t border-border pt-4">
           <p>
-            New to Mango Mart?{' '}
+            New to Fruit Gala?{' '}
             <Link href="/register" className="font-bold text-accent hover:underline flex inline-flex items-center gap-0.5">
               Create an Account
               <ArrowRight className="h-3 w-3" />

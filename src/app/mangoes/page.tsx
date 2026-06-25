@@ -89,34 +89,34 @@ export default async function MangoesPage({ searchParams }: MangoesPageProps) {
 
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
         {/* Sidebar Filters */}
-        <aside className="lg:col-span-1 space-y-6 bg-card/50 p-5 rounded-2xl border border-border/30 h-fit">
-          <div className="flex items-center justify-between border-b border-border/40 pb-3">
-            <h2 className="text-sm font-bold text-foreground uppercase tracking-wider flex items-center gap-1.5">
-              <SlidersHorizontal className="h-4 w-4 text-primary" />
+        <aside className="lg:col-span-1 space-y-7 bg-card/50 p-6 rounded-2xl border border-border/30 h-fit">
+          <div className="flex items-center justify-between border-b border-border/40 pb-4">
+            <h2 className="text-2xl font-black text-foreground uppercase tracking-wider flex items-center gap-2">
+              <SlidersHorizontal className="h-6 w-6 text-primary" />
               Filters
             </h2>
             {activeFiltersCount > 0 && (
               <Link
                 href="/mangoes"
-                className="text-[10px] font-bold text-destructive hover:underline flex items-center gap-1 bg-destructive/5 px-2 py-0.5 rounded-full"
+                className="text-xs font-bold text-destructive hover:underline flex items-center gap-1.5 bg-destructive/5 px-3 py-1 rounded-full"
               >
-                Clear All <X className="h-3 w-3" />
+                Clear All <X className="h-4 w-4" />
               </Link>
             )}
           </div>
 
           {/* Search Filter (Fallback/Sidebar) */}
-          <div className="space-y-2">
-            <label className="text-[11px] font-bold text-foreground uppercase tracking-wider block">Search</label>
+          <div className="space-y-3">
+            <label className="text-base font-black text-foreground uppercase tracking-widest block">Search</label>
             <form action="/mangoes" method="GET" className="relative">
               <Input
                 name="search"
                 type="text"
                 defaultValue={search}
                 placeholder="Search name or variety..."
-                className="pl-8 text-xs bg-secondary/35 border-border/60"
+                className="pl-10 text-base py-3 bg-secondary/35 border-border/60 h-12 font-medium"
               />
-              <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+              <Search className="absolute left-3 top-3.5 h-5 w-5 text-muted-foreground" />
               {/* Keep other active filters as hidden inputs */}
               {variety && <input type="hidden" name="variety" value={variety} />}
               {minPrice !== undefined && <input type="hidden" name="minPrice" value={minPrice} />}
@@ -127,12 +127,12 @@ export default async function MangoesPage({ searchParams }: MangoesPageProps) {
           </div>
 
           {/* Variety Filter */}
-          <div className="space-y-2.5">
-            <label className="text-[11px] font-bold text-foreground uppercase tracking-wider block">Varieties</label>
-            <div className="flex flex-col gap-1 text-xs">
+          <div className="space-y-3">
+            <label className="text-base font-black text-foreground uppercase tracking-widest block">Varieties</label>
+            <div className="flex flex-col gap-2 text-base">
               <Link
                 href={getQueryString({ variety: null, page: 1 })}
-                className={`flex justify-between items-center px-2 py-1.5 rounded-lg transition ${!variety ? 'bg-primary/10 text-primary font-bold' : 'hover:bg-secondary/40 text-muted-foreground'}`}
+                className={`flex justify-between items-center px-3 py-3 rounded-lg transition text-base ${!variety ? 'bg-primary/10 text-primary font-black' : 'hover:bg-secondary/40 text-muted-foreground font-semibold'}`}
               >
                 <span>All Varieties</span>
               </Link>
@@ -140,40 +140,40 @@ export default async function MangoesPage({ searchParams }: MangoesPageProps) {
                 <Link
                   key={v.id}
                   href={getQueryString({ variety: v.name, page: 1 })}
-                  className={`flex justify-between items-center px-2 py-1.5 rounded-lg transition ${variety.toLowerCase() === v.name.toLowerCase() ? 'bg-primary/10 text-primary font-bold' : 'hover:bg-secondary/40 text-muted-foreground'}`}
+                  className={`flex justify-between items-center px-3 py-3 rounded-lg transition text-base ${variety.toLowerCase() === v.name.toLowerCase() ? 'bg-primary/10 text-primary font-black' : 'hover:bg-secondary/40 text-muted-foreground font-semibold'}`}
                 >
                   <span>{v.name}</span>
-                  <span className="text-[10px] bg-secondary px-1.5 py-0.5 rounded-full font-semibold">{v._count?.mangoes || 0}</span>
+                  <span className="text-sm bg-secondary px-2.5 py-1 rounded-full font-bold">{v._count?.mangoes || 0}</span>
                 </Link>
               ))}
             </div>
           </div>
 
           {/* Price Range Filter */}
-          <div className="space-y-2.5">
-            <label className="text-[11px] font-bold text-foreground uppercase tracking-wider block">Price Range</label>
-            <div className="grid grid-cols-2 gap-2">
+          <div className="space-y-3">
+            <label className="text-base font-black text-foreground uppercase tracking-widest block">Price Range</label>
+            <div className="grid grid-cols-2 gap-2.5">
               <Link
                 href={getQueryString({ minPrice: undefined, maxPrice: 2000, page: 1 })}
-                className={`p-2.5 border border-border/60 rounded-xl text-center text-xs transition-all duration-200 ${minPrice === undefined && maxPrice === 2000 ? 'bg-primary/15 border-primary/40 text-primary font-bold shadow-sm' : 'hover:bg-amber-500/5 hover:border-amber-500/30'}`}
+                className={`p-3.5 border border-border/60 rounded-xl text-center text-base font-bold transition-all duration-200 ${minPrice === undefined && maxPrice === 2000 ? 'bg-primary/15 border-primary/40 text-primary font-black shadow-sm' : 'hover:bg-amber-500/5 hover:border-amber-500/30'}`}
               >
                 Under Rs. 2,000
               </Link>
               <Link
                 href={getQueryString({ minPrice: 2000, maxPrice: 3500, page: 1 })}
-                className={`p-2.5 border border-border/60 rounded-xl text-center text-xs transition-all duration-200 ${minPrice === 2000 && maxPrice === 3500 ? 'bg-primary/15 border-primary/40 text-primary font-bold shadow-sm' : 'hover:bg-amber-500/5 hover:border-amber-500/30'}`}
+                className={`p-3.5 border border-border/60 rounded-xl text-center text-base font-bold transition-all duration-200 ${minPrice === 2000 && maxPrice === 3500 ? 'bg-primary/15 border-primary/40 text-primary font-black shadow-sm' : 'hover:bg-amber-500/5 hover:border-amber-500/30'}`}
               >
                 Rs. 2,000 - 3,500
               </Link>
               <Link
                 href={getQueryString({ minPrice: 3500, maxPrice: undefined, page: 1 })}
-                className={`p-2.5 border border-border/60 rounded-xl text-center text-xs transition-all duration-200 ${minPrice === 3500 && maxPrice === undefined ? 'bg-primary/15 border-primary/40 text-primary font-bold shadow-sm' : 'hover:bg-amber-500/5 hover:border-amber-500/30'}`}
+                className={`p-3.5 border border-border/60 rounded-xl text-center text-base font-bold transition-all duration-200 ${minPrice === 3500 && maxPrice === undefined ? 'bg-primary/15 border-primary/40 text-primary font-black shadow-sm' : 'hover:bg-amber-500/5 hover:border-amber-500/30'}`}
               >
                 Over Rs. 3,500
               </Link>
               <Link
                 href={getQueryString({ minPrice: null, maxPrice: null, page: 1 })}
-                className={`p-2.5 border border-border/60 rounded-xl text-center text-xs transition-all duration-200 hover:bg-destructive/5 hover:border-destructive/30 hover:text-destructive ${minPrice === undefined && maxPrice === undefined ? 'hidden' : ''}`}
+                className={`p-3.5 border border-border/60 rounded-xl text-center text-base font-bold transition-all duration-200 hover:bg-destructive/5 hover:border-destructive/30 hover:text-destructive ${minPrice === undefined && maxPrice === undefined ? 'hidden' : ''}`}
               >
                 Reset Price
               </Link>
@@ -181,24 +181,24 @@ export default async function MangoesPage({ searchParams }: MangoesPageProps) {
           </div>
 
           {/* Stock Status Filter */}
-          <div className="space-y-2.5">
-            <label className="text-[11px] font-bold text-foreground uppercase tracking-wider block">Stock Status</label>
-            <div className="flex flex-col gap-1 text-xs">
+          <div className="space-y-3">
+            <label className="text-base font-black text-foreground uppercase tracking-widest block">Stock Status</label>
+            <div className="flex flex-col gap-2 text-base">
               <Link
                 href={getQueryString({ stockStatus: null, page: 1 })}
-                className={`flex items-center px-2 py-1.5 rounded-lg transition ${!stockStatus ? 'bg-primary/10 text-primary font-bold' : 'hover:bg-secondary/40 text-muted-foreground'}`}
+                className={`flex items-center px-3 py-3 rounded-lg transition text-base ${!stockStatus ? 'bg-primary/10 text-primary font-black' : 'hover:bg-secondary/40 text-muted-foreground font-semibold'}`}
               >
                 All Status
               </Link>
               <Link
                 href={getQueryString({ stockStatus: 'in-stock', page: 1 })}
-                className={`flex items-center px-2 py-1.5 rounded-lg transition ${stockStatus === 'in-stock' ? 'bg-primary/10 text-primary font-bold' : 'hover:bg-secondary/40 text-muted-foreground'}`}
+                className={`flex items-center px-3 py-3 rounded-lg transition text-base ${stockStatus === 'in-stock' ? 'bg-primary/10 text-primary font-black' : 'hover:bg-secondary/40 text-muted-foreground font-semibold'}`}
               >
                 Available In-Stock
               </Link>
               <Link
                 href={getQueryString({ stockStatus: 'out-of-stock', page: 1 })}
-                className={`flex items-center px-2 py-1.5 rounded-lg transition ${stockStatus === 'out-of-stock' ? 'bg-primary/10 text-primary font-bold' : 'hover:bg-secondary/40 text-muted-foreground'}`}
+                className={`flex items-center px-3 py-3 rounded-lg transition text-base ${stockStatus === 'out-of-stock' ? 'bg-primary/10 text-primary font-black' : 'hover:bg-secondary/40 text-muted-foreground font-semibold'}`}
               >
                 Out of Stock
               </Link>

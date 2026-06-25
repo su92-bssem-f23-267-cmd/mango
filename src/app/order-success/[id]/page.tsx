@@ -50,7 +50,7 @@ export default async function OrderSuccessPage(props: OrderSuccessPageProps) {
         <div className="space-y-1">
           <h1 className="text-3xl font-black text-primary tracking-tight">Order Placed Successfully!</h1>
           <p className="text-sm text-muted-foreground">
-            Thank you for shopping at Mango Mart. Your harvest has been reserved.
+            Thank you for shopping at Fruit Gala. Your harvest has been reserved.
           </p>
         </div>
       </div>

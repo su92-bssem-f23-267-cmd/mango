@@ -17,10 +17,10 @@ export function Footer() {
           {/* Brand and Description */}
           <div className="space-y-4">
             <span className="text-xl font-black tracking-tight text-primary">
-              Mango<span className="text-accent font-black">Mart</span>
+              Fruit<span className="text-accent font-black">Gala</span>
             </span>
             <p className="text-xs text-muted-foreground leading-relaxed">
-              Sourcing the finest, hand-picked exotic mangoes and artisanal mango delicacies from globally certified orchards directly to your doorstep.
+              Sourcing the finest, hand-picked premium fresh fruits and artisanal delicacies from globally certified orchards directly to your doorstep.
             </p>
             <div className="flex space-x-4">
               <Link href="#" aria-label="Facebook" className="text-muted-foreground hover:text-accent transition">
@@ -66,7 +66,7 @@ export function Footer() {
               </li>
               <li className="flex items-center gap-2">
                 <Mail className="h-4 w-4 text-primary shrink-0" />
-                <span>support@mangomart.com</span>
+                <span>support@fruitgala.com</span>
               </li>
             </ul>
           </div>
@@ -96,7 +96,7 @@ export function Footer() {
 
         {/* Lower footer copyright */}
         <div className="border-t border-border/60 mt-10 pt-6 flex flex-col md:flex-row items-center justify-between text-xs text-muted-foreground gap-4">
-          <p>&copy; {new Date().getFullYear()} Mango Mart LLC. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} Fruit Gala LLC. All rights reserved.</p>
           <div className="flex gap-6">
             <Link href="#" className="hover:text-accent transition">Privacy Policy</Link>
             <Link href="#" className="hover:text-accent transition">Terms of Service</Link>

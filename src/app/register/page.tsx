@@ -81,7 +81,7 @@ export default function RegisterPage() {
           </div>
           <CardTitle className="text-2xl font-black text-primary tracking-tight">Create Account</CardTitle>
           <CardDescription className="text-xs">
-            Join Mango Mart to track orders and save your delivery details.
+            Join Fruit Gala to track orders and save your delivery details.
           </CardDescription>
         </CardHeader>
         <CardContent>

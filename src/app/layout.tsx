@@ -5,6 +5,7 @@ import "./globals.css";
 import Providers from "@/components/Providers";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import BottomNav from "@/components/layout/BottomNav";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -17,15 +18,15 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Mango Mart - Premium Exotic Mangoes & Delicacies",
-  description: "Shop hand-picked fresh exotic mangoes (Alphonso, Kesar, Sindhri, Chaunsa) and organic mango delicacies directly from our orchards.",
-  keywords: "mangoes, fresh mangoes, alphonso mango, kesar mango, online mango shop, order mangoes, mango pulp",
+  title: "Fruit Gala - Premium Fresh Fruits & Delicacies",
+  description: "Shop hand-picked premium fresh fruits and organic delicacies delivered directly from our orchards. Fast fresh fruit delivery from your favourite online fruit store.",
+  keywords: "fresh fruits, premium fruits, fruit delivery, online fruit store, order fruits, fruit gala, exotic fruits",
   openGraph: {
-    title: "Mango Mart - Premium Exotic Mangoes & Delicacies",
-    description: "Shop hand-picked fresh exotic mangoes and organic mango delicacies directly from our orchards.",
+    title: "Fruit Gala - Premium Fresh Fruits & Delicacies",
+    description: "Shop hand-picked premium fresh fruits and organic delicacies delivered directly from our orchards.",
     type: "website",
     locale: "en_US",
-    siteName: "Mango Mart",
+    siteName: "Fruit Gala",
   }
 };
 
@@ -33,7 +34,7 @@ function HeaderFallback() {
   return (
     <header className="sticky top-0 z-40 w-full border-b border-border bg-background/90 backdrop-blur-md">
       <div className="container mx-auto flex h-16 items-center justify-between px-4">
-        <span className="text-lg font-black tracking-tight text-primary">🥭 Mango Mart</span>
+        <span className="text-lg font-black tracking-tight text-primary">🍓 Fruit Gala</span>
       </div>
     </header>
   );
@@ -54,8 +55,9 @@ export default function RootLayout({
           <Suspense fallback={<HeaderFallback />}>
             <Header />
           </Suspense>
-          <main className="flex-1 flex flex-col">{children}</main>
+          <main className="flex-1 flex flex-col pb-24 md:pb-0">{children}</main>
           <Footer />
+          <BottomNav />
         </Providers>
         
         {/* Floating WhatsApp Action Button */}
@@ -63,7 +65,7 @@ export default function RootLayout({
           href="https://wa.me/923056662974"
           target="_blank"
           rel="noopener noreferrer"
-          className="fixed bottom-6 right-6 z-50 flex items-center gap-2 bg-[#25D366] text-white p-3.5 rounded-full shadow-lg hover:shadow-[#25D366]/30 hover:shadow-xl transition-all duration-300 group hover:scale-105 active:scale-95 border border-white/10"
+          className="fixed bottom-24 right-5 md:bottom-6 md:right-6 z-40 flex items-center gap-2 bg-[#25D366] text-white p-3.5 rounded-full shadow-lg hover:shadow-[#25D366]/30 hover:shadow-xl transition-all duration-300 group hover:scale-105 active:scale-95 border border-white/10"
           aria-label="Chat on WhatsApp"
         >
           <svg

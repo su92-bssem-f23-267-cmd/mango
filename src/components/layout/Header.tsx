@@ -52,7 +52,7 @@ function HeaderContent() {
         {/* Brand Logo */}
         <Link href="/" className="flex items-center space-x-2 group">
           <span className="text-2xl font-black tracking-tight text-primary transition-transform duration-300 group-hover:scale-105">
-            Mango<span className="text-accent font-black">Mart</span>
+            Fruit<span className="text-accent font-black">Gala</span>
           </span>
         </Link>
 
@@ -319,7 +319,7 @@ export function Header() {
     <Suspense fallback={
       <header className="sticky top-0 z-40 w-full border-b border-border bg-background/90 backdrop-blur-md">
         <div className="container mx-auto flex h-16 items-center justify-between px-4">
-          <span className="text-lg font-black tracking-tight text-primary">🥭 Mango Mart</span>
+          <span className="text-lg font-black tracking-tight text-primary">🍓 Fruit Gala</span>
         </div>
       </header>
     }>

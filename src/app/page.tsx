@@ -4,7 +4,25 @@ import { ArrowRight, Leaf, ShieldCheck, Truck, RefreshCw, Star, MessageSquare } 
 import { getFeaturedMangoes, getActiveVarieties, getMangoProducts } from '@/actions/shopActions'
 import { MangoCard } from '@/components/product/MangoCard'
 import { buttonVariants } from '@/components/ui/button'
+import { Reveal } from '@/components/ui/reveal'
 import { cn } from '@/lib/utils'
+
+type HomeMango = {
+  id: string
+  name: string
+  description: string
+  price: number
+  stock: number
+  image: string
+  variety: { id: string; name: string }
+}
+
+type HomeVariety = {
+  id: string
+  name: string
+  description?: string | null
+  _count?: { mangoes?: number }
+}
 
 export default async function Home() {
   // Parallel server-side data fetching from PostgreSQL
@@ -46,24 +64,24 @@ export default async function Home() {
   return (
     <div className="w-full space-y-16 pb-16">
       {/* Premium Hero Section */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-amber-500/15 via-background via-60% to-orange-400/12 py-20 lg:py-32">
+      <section className="relative overflow-hidden bg-gradient-to-br from-emerald-500/12 via-background via-55% to-lime-400/12 py-20 lg:py-32">
         {/* Background radial glow decorations */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[600px] bg-amber-400/8 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute top-0 right-0 w-96 h-96 bg-emerald-500/5 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[600px] bg-emerald-400/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute top-0 right-0 w-96 h-96 bg-amber-400/8 rounded-full blur-3xl pointer-events-none" />
 
         <div className="container mx-auto px-4 flex flex-col lg:flex-row items-center justify-between gap-14 relative z-10">
           {/* Hero Text */}
           <div className="max-w-2xl text-center lg:text-left space-y-7">
-            <div className="inline-flex items-center space-x-2 bg-amber-500/15 border border-amber-500/30 rounded-full px-5 py-2 text-amber-700 dark:text-amber-400 shadow-sm">
-              <Leaf className="h-4 w-4 text-amber-600 dark:text-amber-500 fill-amber-500/20 animate-bounce" />
-              <span className="text-xs font-extrabold uppercase tracking-widest">Premium Orchard Harvests</span>
+            <div className="inline-flex items-center space-x-2 bg-primary/12 border border-primary/30 rounded-full px-5 py-2 text-primary shadow-sm reveal-up">
+              <Leaf className="h-4 w-4 text-primary fill-primary/20 animate-bounce" />
+              <span className="text-xs font-extrabold uppercase tracking-widest">Premium Fresh Harvests</span>
             </div>
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-black tracking-tight leading-[1.05] text-primary text-3d-green cursor-default select-none">
               Taste the Sunshine: <br />
-              <span className="text-amber-500 text-3d inline-block">Exotic Mangoes</span> Direct From Our Farms
+              <span className="text-gradient-green inline-block">Fresh Fruits</span> Direct From Our Farms
             </h1>
             <p className="text-base md:text-lg text-muted-foreground leading-relaxed max-w-lg mx-auto lg:mx-0">
-              Savor the luscious sweetness of the world&apos;s most sought-after variety of mangoes. Handpicked at peak ripeness and shipped via cold-chain logistics.
+              Savor the luscious sweetness of the world&apos;s most sought-after fruits. Handpicked at peak ripeness and shipped via cold-chain logistics.
             </p>
             <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4">
               <Link
@@ -112,7 +130,7 @@ export default async function Home() {
       {/* Brand Values Section (Why Choose Us) */}
       <section className="py-14 border-y border-border/40 bg-gradient-to-b from-card/60 to-background">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+          <Reveal className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
             <div className="flex items-start gap-4 p-4 rounded-2xl hover:bg-amber-500/5 transition-colors duration-300">
               <div className="bg-gradient-to-br from-amber-400/15 to-amber-600/15 p-3.5 rounded-2xl text-amber-600 shrink-0 shadow-sm">
                 <Leaf className="h-6 w-6" />
@@ -149,7 +167,7 @@ export default async function Home() {
                 <p className="text-xs text-muted-foreground mt-1 leading-relaxed">Any bruising or issues? Get instant free product replacements.</p>
               </div>
             </div>
-          </div>
+          </Reveal>
         </div>
       </section>
 
@@ -167,11 +185,11 @@ export default async function Home() {
             </Link>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {featuredMangoes.slice(0, 4).map((mango: any) => (
+          <Reveal className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {featuredMangoes.slice(0, 4).map((mango: HomeMango) => (
               <MangoCard key={mango.id} mango={mango} />
             ))}
-          </div>
+          </Reveal>
         </section>
       )}
 
@@ -185,7 +203,7 @@ export default async function Home() {
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 card-3d-container">
-              {varieties.map((varItem: any) => (
+              {varieties.map((varItem: HomeVariety) => (
                 <Link
                   href={`/mangoes?variety=${encodeURIComponent(varItem.name)}`}
                   key={varItem.id}
@@ -226,11 +244,11 @@ export default async function Home() {
             </Link>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {latestMangoes.map((mango: any) => (
+          <Reveal className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {latestMangoes.map((mango: HomeMango) => (
               <MangoCard key={mango.id} mango={mango} />
             ))}
-          </div>
+          </Reveal>
         </section>
       )}
 
@@ -245,7 +263,7 @@ export default async function Home() {
             <p className="text-xs text-muted-foreground">Real reviews from our mango enthusiasts.</p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <Reveal className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {reviews.map((rev) => (
               <div key={rev.id} className="p-6 rounded-2xl border border-border/40 bg-background hover:border-amber-500/30 transition-all duration-300 flex flex-col justify-between space-y-4 shadow-sm hover:shadow-lg hover:shadow-amber-500/5">
                 <div className="space-y-3">
@@ -264,7 +282,7 @@ export default async function Home() {
                 </div>
               </div>
             ))}
-          </div>
+          </Reveal>
         </div>
       </section>
 

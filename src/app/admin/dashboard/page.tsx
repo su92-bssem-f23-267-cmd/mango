@@ -114,7 +114,7 @@ export default async function AdminDashboardPage() {
     <div className="space-y-8">
       <div>
         <h1 className="text-2xl font-black text-primary tracking-tight md:text-3xl">Admin Dashboard</h1>
-        <p className="text-xs text-muted-foreground mt-1">Real-time overview of Mango Mart performance and COD orders.</p>
+        <p className="text-xs text-muted-foreground mt-1">Real-time overview of Fruit Gala performance and COD orders.</p>
       </div>
 
       {/* Alerts */}
