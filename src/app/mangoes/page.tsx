@@ -80,16 +80,16 @@ export default async function MangoesPage({ searchParams }: MangoesPageProps) {
     (stockStatus ? 1 : 0)
 
   return (
-    <div className="container mx-auto px-4 py-8 space-y-6">
+    <div className="container mx-auto px-4 py-10 space-y-8">
       {/* Page Header */}
-      <div className="space-y-1.5 border-b border-border/40 pb-4">
-        <h1 className="text-3xl font-black text-primary tracking-tight">Browse Our Harvest</h1>
-        <p className="text-xs text-muted-foreground">Select from fresh, premium, natural mangoes hand-selected for sweetness.</p>
+      <div className="space-y-2 border-b border-border/30 pb-5">
+        <h1 className="text-3xl md:text-4xl font-black text-primary tracking-tight text-3d-green cursor-default select-none">Browse Our Harvest</h1>
+        <p className="text-sm text-muted-foreground">Select from fresh, premium, natural mangoes hand-selected for sweetness.</p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
         {/* Sidebar Filters */}
-        <aside className="lg:col-span-1 space-y-6">
+        <aside className="lg:col-span-1 space-y-6 bg-card/50 p-5 rounded-2xl border border-border/30 h-fit">
           <div className="flex items-center justify-between border-b border-border/40 pb-3">
             <h2 className="text-sm font-bold text-foreground uppercase tracking-wider flex items-center gap-1.5">
               <SlidersHorizontal className="h-4 w-4 text-primary" />
@@ -150,30 +150,30 @@ export default async function MangoesPage({ searchParams }: MangoesPageProps) {
           </div>
 
           {/* Price Range Filter */}
-          <div className="space-y-2">
+          <div className="space-y-2.5">
             <label className="text-[11px] font-bold text-foreground uppercase tracking-wider block">Price Range</label>
             <div className="grid grid-cols-2 gap-2">
               <Link
-                href={getQueryString({ minPrice: undefined, maxPrice: 10, page: 1 })}
-                className={`p-2 border border-border/80 rounded-xl text-center text-xs transition ${minPrice === undefined && maxPrice === 10 ? 'bg-primary/15 border-primary/40 text-primary font-bold' : 'hover:bg-secondary/40'}`}
+                href={getQueryString({ minPrice: undefined, maxPrice: 2000, page: 1 })}
+                className={`p-2.5 border border-border/60 rounded-xl text-center text-xs transition-all duration-200 ${minPrice === undefined && maxPrice === 2000 ? 'bg-primary/15 border-primary/40 text-primary font-bold shadow-sm' : 'hover:bg-amber-500/5 hover:border-amber-500/30'}`}
               >
-                Under $10
+                Under Rs. 2,000
               </Link>
               <Link
-                href={getQueryString({ minPrice: 10, maxPrice: 20, page: 1 })}
-                className={`p-2 border border-border/80 rounded-xl text-center text-xs transition ${minPrice === 10 && maxPrice === 20 ? 'bg-primary/15 border-primary/40 text-primary font-bold' : 'hover:bg-secondary/40'}`}
+                href={getQueryString({ minPrice: 2000, maxPrice: 3500, page: 1 })}
+                className={`p-2.5 border border-border/60 rounded-xl text-center text-xs transition-all duration-200 ${minPrice === 2000 && maxPrice === 3500 ? 'bg-primary/15 border-primary/40 text-primary font-bold shadow-sm' : 'hover:bg-amber-500/5 hover:border-amber-500/30'}`}
               >
-                $10 to $20
+                Rs. 2,000 - 3,500
               </Link>
               <Link
-                href={getQueryString({ minPrice: 20, maxPrice: undefined, page: 1 })}
-                className={`p-2 border border-border/80 rounded-xl text-center text-xs transition ${minPrice === 20 && maxPrice === undefined ? 'bg-primary/15 border-primary/40 text-primary font-bold' : 'hover:bg-secondary/40'}`}
+                href={getQueryString({ minPrice: 3500, maxPrice: undefined, page: 1 })}
+                className={`p-2.5 border border-border/60 rounded-xl text-center text-xs transition-all duration-200 ${minPrice === 3500 && maxPrice === undefined ? 'bg-primary/15 border-primary/40 text-primary font-bold shadow-sm' : 'hover:bg-amber-500/5 hover:border-amber-500/30'}`}
               >
-                Over $20
+                Over Rs. 3,500
               </Link>
               <Link
                 href={getQueryString({ minPrice: null, maxPrice: null, page: 1 })}
-                className={`p-2 border border-border/80 rounded-xl text-center text-xs hover:bg-secondary/40 ${minPrice === undefined && maxPrice === undefined ? 'hidden' : ''}`}
+                className={`p-2.5 border border-border/60 rounded-xl text-center text-xs transition-all duration-200 hover:bg-destructive/5 hover:border-destructive/30 hover:text-destructive ${minPrice === undefined && maxPrice === undefined ? 'hidden' : ''}`}
               >
                 Reset Price
               </Link>

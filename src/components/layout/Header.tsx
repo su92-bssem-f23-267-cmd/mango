@@ -47,22 +47,22 @@ function HeaderContent() {
   }
 
   return (
-    <header className="sticky top-0 z-40 w-full border-b border-border bg-background/90 backdrop-blur-md">
+    <header className="sticky top-0 z-40 w-full border-b border-border/50 bg-background/80 backdrop-blur-xl shadow-sm">
       <div className="container mx-auto flex h-16 items-center justify-between px-4">
         {/* Brand Logo */}
-        <Link href="/" className="flex items-center space-x-2">
-          <span className="text-2xl font-black tracking-tight text-primary">
+        <Link href="/" className="flex items-center space-x-2 group">
+          <span className="text-2xl font-black tracking-tight text-primary transition-transform duration-300 group-hover:scale-105">
             Mango<span className="text-accent font-black">Mart</span>
           </span>
         </Link>
 
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex space-x-6 text-sm font-medium">
-          <Link href="/" className="transition hover:text-accent">Home</Link>
-          <Link href="/mangoes" className="transition hover:text-accent">Browse Mangoes</Link>
-          <Link href="/wishlist" className="transition hover:text-accent flex items-center gap-1"><Heart className="h-3.5 w-3.5 text-foreground" /> Wishlist</Link>
+        <nav className="hidden md:flex space-x-6 text-sm font-semibold">
+          <Link href="/" className="transition-all duration-300 hover:text-accent hover:-translate-y-0.5">Home</Link>
+          <Link href="/mangoes" className="transition-all duration-300 hover:text-accent hover:-translate-y-0.5">Browse Mangoes</Link>
+          <Link href="/wishlist" className="transition-all duration-300 hover:text-accent hover:-translate-y-0.5 flex items-center gap-1"><Heart className="h-3.5 w-3.5 text-foreground" /> Wishlist</Link>
           {session && (
-            <Link href="/profile/orders" className="transition hover:text-accent flex items-center gap-1">
+            <Link href="/profile/orders" className="transition-all duration-300 hover:text-accent hover:-translate-y-0.5 flex items-center gap-1">
               Order History
             </Link>
           )}

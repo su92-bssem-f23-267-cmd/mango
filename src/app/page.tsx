@@ -46,27 +46,31 @@ export default async function Home() {
   return (
     <div className="w-full space-y-16 pb-16">
       {/* Premium Hero Section */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-amber-500/10 via-background to-orange-500/10 py-20 lg:py-28">
-        <div className="container mx-auto px-4 flex flex-col lg:flex-row items-center justify-between gap-12">
+      <section className="relative overflow-hidden bg-gradient-to-br from-amber-500/15 via-background via-60% to-orange-400/12 py-20 lg:py-32">
+        {/* Background radial glow decorations */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[600px] bg-amber-400/8 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute top-0 right-0 w-96 h-96 bg-emerald-500/5 rounded-full blur-3xl pointer-events-none" />
+
+        <div className="container mx-auto px-4 flex flex-col lg:flex-row items-center justify-between gap-14 relative z-10">
           {/* Hero Text */}
-          <div className="max-w-2xl text-center lg:text-left space-y-6">
-            <div className="inline-flex items-center space-x-2 bg-amber-500/15 border border-amber-500/25 rounded-full px-4 py-1.5 text-amber-700 dark:text-amber-400">
+          <div className="max-w-2xl text-center lg:text-left space-y-7">
+            <div className="inline-flex items-center space-x-2 bg-amber-500/15 border border-amber-500/30 rounded-full px-5 py-2 text-amber-700 dark:text-amber-400 shadow-sm">
               <Leaf className="h-4 w-4 text-amber-600 dark:text-amber-500 fill-amber-500/20 animate-bounce" />
-              <span className="text-xs font-bold uppercase tracking-wider">Premium Orchard Harvests</span>
+              <span className="text-xs font-extrabold uppercase tracking-widest">Premium Orchard Harvests</span>
             </div>
-            <h1 className="text-4xl md:text-6xl font-black tracking-tight leading-[1.05] text-primary text-3d-green cursor-default select-none">
+            <h1 className="text-4xl md:text-6xl lg:text-7xl font-black tracking-tight leading-[1.05] text-primary text-3d-green cursor-default select-none">
               Taste the Sunshine: <br />
               <span className="text-amber-500 text-3d inline-block">Exotic Mangoes</span> Direct From Our Farms
             </h1>
-            <p className="text-base text-muted-foreground leading-relaxed max-w-lg mx-auto lg:mx-0">
-              Savor the luscious sweetness of the world's most sought-after variety of mangoes. Handpicked at peak ripeness and shipped via cold-chain logistics.
+            <p className="text-base md:text-lg text-muted-foreground leading-relaxed max-w-lg mx-auto lg:mx-0">
+              Savor the luscious sweetness of the world&apos;s most sought-after variety of mangoes. Handpicked at peak ripeness and shipped via cold-chain logistics.
             </p>
             <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4">
               <Link
                 href="/mangoes"
                 className={cn(
                   buttonVariants({ size: "lg" }),
-                  "font-bold cursor-pointer flex items-center gap-2 bg-primary text-primary-foreground hover:bg-primary/90 rounded-full"
+                  "font-bold cursor-pointer flex items-center gap-2 bg-primary text-primary-foreground hover:bg-primary/90 rounded-full shadow-lg hover:shadow-xl hover:shadow-primary/20 transition-all duration-300"
                 )}
               >
                 Browse Harvests
@@ -76,7 +80,7 @@ export default async function Home() {
                 href="#varieties"
                 className={cn(
                   buttonVariants({ variant: "outline", size: "lg" }),
-                  "font-bold border-primary text-primary hover:bg-primary/10 cursor-pointer rounded-full"
+                  "font-bold border-primary text-primary hover:bg-primary/10 cursor-pointer rounded-full shadow-sm hover:shadow-md transition-all duration-300"
                 )}
               >
                 Explore Varieties
@@ -85,15 +89,15 @@ export default async function Home() {
           </div>
 
           {/* Hero Banner Image */}
-          <div className="relative w-full max-w-md lg:max-w-lg aspect-4/3 rounded-3xl overflow-hidden shadow-2xl border-4 border-white/65 animate-float-3d preserve-3d">
+          <div className="relative w-full max-w-md lg:max-w-lg aspect-4/3 rounded-3xl overflow-hidden shadow-2xl border-4 border-white/65 dark:border-white/10 animate-float-3d preserve-3d">
             <img
               src="/uploads/mangoes/hero-mangoes.png"
               alt="Fresh Premium Alphonso Mangoes"
               className="h-full w-full object-cover pop-z-image"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
-            <div className="absolute bottom-4 left-4 bg-white/95 dark:bg-zinc-950/90 backdrop-blur px-4 py-3 rounded-2xl border border-border flex items-center gap-3 shadow-lg transform translate-z-20 preserve-3d">
-              <div className="bg-amber-500/10 h-10 w-10 rounded-full flex items-center justify-center text-amber-600 font-bold text-sm translate-z-10">
+            <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
+            <div className="absolute bottom-4 left-4 bg-white/95 dark:bg-zinc-950/90 backdrop-blur-md px-4 py-3 rounded-2xl border border-border flex items-center gap-3 shadow-xl transform translate-z-20 preserve-3d">
+              <div className="bg-gradient-to-br from-amber-400/20 to-amber-600/20 h-11 w-11 rounded-full flex items-center justify-center text-amber-600 font-black text-sm translate-z-10">
                 4.9
               </div>
               <div className="translate-z-10">
@@ -106,43 +110,43 @@ export default async function Home() {
       </section>
 
       {/* Brand Values Section (Why Choose Us) */}
-      <section className="py-12 border-y border-border/60 bg-card/50">
+      <section className="py-14 border-y border-border/40 bg-gradient-to-b from-card/60 to-background">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            <div className="flex items-start gap-4">
-              <div className="bg-amber-500/10 p-3 rounded-2xl text-amber-600 shrink-0">
+            <div className="flex items-start gap-4 p-4 rounded-2xl hover:bg-amber-500/5 transition-colors duration-300">
+              <div className="bg-gradient-to-br from-amber-400/15 to-amber-600/15 p-3.5 rounded-2xl text-amber-600 shrink-0 shadow-sm">
                 <Leaf className="h-6 w-6" />
               </div>
               <div>
                 <h4 className="text-sm font-bold text-foreground">Orchard Sourced</h4>
-                <p className="text-xs text-muted-foreground mt-0.5">100% naturally ripened using traditional organic methods.</p>
+                <p className="text-xs text-muted-foreground mt-1 leading-relaxed">100% naturally ripened using traditional organic methods.</p>
               </div>
             </div>
-            <div className="flex items-start gap-4">
-              <div className="bg-amber-500/10 p-3 rounded-2xl text-amber-600 shrink-0">
+            <div className="flex items-start gap-4 p-4 rounded-2xl hover:bg-amber-500/5 transition-colors duration-300">
+              <div className="bg-gradient-to-br from-amber-400/15 to-amber-600/15 p-3.5 rounded-2xl text-amber-600 shrink-0 shadow-sm">
                 <Truck className="h-6 w-6" />
               </div>
               <div>
                 <h4 className="text-sm font-bold text-foreground">Cold-Chain Shipping</h4>
-                <p className="text-xs text-muted-foreground mt-0.5">Rapid temperature controlled transit to seal the flavor.</p>
+                <p className="text-xs text-muted-foreground mt-1 leading-relaxed">Rapid temperature controlled transit to seal the flavor.</p>
               </div>
             </div>
-            <div className="flex items-start gap-4">
-              <div className="bg-amber-500/10 p-3 rounded-2xl text-amber-600 shrink-0">
+            <div className="flex items-start gap-4 p-4 rounded-2xl hover:bg-amber-500/5 transition-colors duration-300">
+              <div className="bg-gradient-to-br from-amber-400/15 to-amber-600/15 p-3.5 rounded-2xl text-amber-600 shrink-0 shadow-sm">
                 <ShieldCheck className="h-6 w-6" />
               </div>
               <div>
                 <h4 className="text-sm font-bold text-foreground">Premium Selection</h4>
-                <p className="text-xs text-muted-foreground mt-0.5">Strict quality grading on size, color, and sugar brix level.</p>
+                <p className="text-xs text-muted-foreground mt-1 leading-relaxed">Strict quality grading on size, color, and sugar brix level.</p>
               </div>
             </div>
-            <div className="flex items-start gap-4">
-              <div className="bg-amber-500/10 p-3 rounded-2xl text-amber-600 shrink-0">
+            <div className="flex items-start gap-4 p-4 rounded-2xl hover:bg-amber-500/5 transition-colors duration-300">
+              <div className="bg-gradient-to-br from-amber-400/15 to-amber-600/15 p-3.5 rounded-2xl text-amber-600 shrink-0 shadow-sm">
                 <RefreshCw className="h-6 w-6" />
               </div>
               <div>
                 <h4 className="text-sm font-bold text-foreground">Fresh Replacements</h4>
-                <p className="text-xs text-muted-foreground mt-0.5">Any bruising or issues? Get instant free product replacements.</p>
+                <p className="text-xs text-muted-foreground mt-1 leading-relaxed">Any bruising or issues? Get instant free product replacements.</p>
               </div>
             </div>
           </div>
@@ -231,7 +235,7 @@ export default async function Home() {
       )}
 
       {/* Customer Reviews Section */}
-      <section className="bg-card py-16 border-y border-border/60">
+      <section className="bg-gradient-to-b from-card to-background py-16 border-y border-border/40">
         <div className="container mx-auto px-4 space-y-10">
           <div className="text-center max-w-xl mx-auto space-y-2">
             <h2 className="text-2xl md:text-3xl font-black text-primary tracking-tight flex items-center justify-center gap-2">
@@ -243,8 +247,8 @@ export default async function Home() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {reviews.map((rev) => (
-              <div key={rev.id} className="p-6 rounded-2xl border border-border/60 bg-background flex flex-col justify-between space-y-4">
-                <div className="space-y-2">
+              <div key={rev.id} className="p-6 rounded-2xl border border-border/40 bg-background hover:border-amber-500/30 transition-all duration-300 flex flex-col justify-between space-y-4 shadow-sm hover:shadow-lg hover:shadow-amber-500/5">
+                <div className="space-y-3">
                   <div className="flex items-center space-x-0.5 text-amber-500">
                     {[...Array(rev.rating)].map((_, i) => (
                       <Star key={i} className="h-4 w-4 fill-amber-500" />
@@ -265,11 +269,11 @@ export default async function Home() {
       </section>
 
       {/* Callout Sign Up Banner */}
-      <section className="py-16 bg-primary text-primary-foreground relative overflow-hidden rounded-3xl container mx-auto px-6 shadow-lg">
-        <div className="relative z-10 max-w-xl mx-auto text-center space-y-6">
-          <Leaf className="h-10 w-10 text-amber-400 fill-amber-400 mx-auto" />
-          <h2 className="text-3xl font-black tracking-tight">Become a Premium Member</h2>
-          <p className="text-sm text-zinc-200 leading-relaxed">
+      <section className="py-20 bg-gradient-to-br from-primary via-primary to-emerald-900 text-primary-foreground relative overflow-hidden rounded-3xl container mx-auto px-6 shadow-2xl">
+        <div className="relative z-10 max-w-xl mx-auto text-center space-y-7">
+          <Leaf className="h-12 w-12 text-amber-400 fill-amber-400 mx-auto drop-shadow-lg" />
+          <h2 className="text-3xl md:text-4xl font-black tracking-tight">Become a Premium Member</h2>
+          <p className="text-sm md:text-base text-zinc-200/90 leading-relaxed">
             Create an account or login to register as a premium member, track orders, save items to your wishlist, and get first access on limited seasonal drops.
           </p>
           <div className="flex justify-center gap-4">
@@ -277,7 +281,7 @@ export default async function Home() {
               href="/register"
               className={cn(
                 buttonVariants({ size: "lg" }),
-                "bg-amber-500 text-amber-950 hover:bg-amber-400 font-black cursor-pointer rounded-full px-8"
+                "bg-amber-500 text-amber-950 hover:bg-amber-400 font-black cursor-pointer rounded-full px-10 shadow-lg hover:shadow-xl hover:shadow-amber-500/30 transition-all duration-300"
               )}
             >
               Sign Up Free
@@ -285,8 +289,9 @@ export default async function Home() {
           </div>
         </div>
         {/* Decorative elements */}
-        <div className="absolute -top-12 -left-12 h-48 w-48 bg-amber-500/10 rounded-full blur-2xl" />
-        <div className="absolute -bottom-12 -right-12 h-48 w-48 bg-amber-500/20 rounded-full blur-2xl" />
+        <div className="absolute -top-16 -left-16 h-64 w-64 bg-amber-500/10 rounded-full blur-3xl" />
+        <div className="absolute -bottom-16 -right-16 h-64 w-64 bg-amber-500/15 rounded-full blur-3xl" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-emerald-400/5 rounded-full blur-3xl" />
       </section>
     </div>
   )

@@ -148,20 +148,20 @@ export default async function AdminDashboardPage() {
       )}
 
       {/* Order Stats Grid */}
-      <div>
+      <div className="card-3d-container">
         <h2 className="text-lg font-bold text-foreground tracking-tight mb-3">📦 Order Statistics</h2>
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           {orderStats.map((stat) => (
-            <Card key={stat.title} className="shadow-sm border-border/80">
-              <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0">
-                <CardTitle className="text-xs font-bold uppercase tracking-wider text-muted-foreground">{stat.title}</CardTitle>
-                <div className={`p-2 rounded-md ${stat.color}`}>
+            <Card key={stat.title} className="card-3d-hover preserve-3d glow-mango glow-mango-hover shadow-sm border-border/40 bg-card hover:border-amber-500/20 transition-all duration-300 rounded-2xl">
+              <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0 preserve-3d">
+                <CardTitle className="text-xs font-bold uppercase tracking-wider text-muted-foreground pop-z-text">{stat.title}</CardTitle>
+                <div className={`p-2.5 rounded-xl shadow-sm ${stat.color} pop-z-text`}>
                   <stat.icon className="h-4 w-4" />
                 </div>
               </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-black tracking-tight">{stat.value}</div>
-                <p className="text-[10px] text-muted-foreground mt-1">{stat.description}</p>
+              <CardContent className="preserve-3d pt-2">
+                <div className="text-2xl font-black tracking-tight text-foreground pop-z-text">{stat.value}</div>
+                <p className="text-[10px] text-muted-foreground mt-1 pop-z-text leading-relaxed">{stat.description}</p>
               </CardContent>
             </Card>
           ))}
@@ -169,18 +169,18 @@ export default async function AdminDashboardPage() {
       </div>
 
       {/* Catalog Stats */}
-      <div className="grid gap-4 md:grid-cols-2">
+      <div className="grid gap-4 md:grid-cols-2 card-3d-container">
         {storeMetrics.map((stat) => (
-          <Card key={stat.title} className="shadow-sm border-border/80">
-            <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0">
-              <CardTitle className="text-xs font-bold uppercase tracking-wider text-muted-foreground">{stat.title}</CardTitle>
-              <div className={`p-2 rounded-md ${stat.color}`}>
+          <Card key={stat.title} className="card-3d-hover preserve-3d glow-mango glow-mango-hover shadow-sm border-border/40 bg-card hover:border-amber-500/20 transition-all duration-300 rounded-2xl">
+            <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0 preserve-3d">
+              <CardTitle className="text-xs font-bold uppercase tracking-wider text-muted-foreground pop-z-text">{stat.title}</CardTitle>
+              <div className={`p-2.5 rounded-xl shadow-sm ${stat.color} pop-z-text`}>
                 <stat.icon className="h-4 w-4" />
               </div>
             </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-black tracking-tight">{stat.value}</div>
-              <p className="text-[10px] text-muted-foreground mt-1">{stat.description}</p>
+            <CardContent className="preserve-3d pt-2">
+              <div className="text-2xl font-black tracking-tight text-foreground pop-z-text">{stat.value}</div>
+              <p className="text-[10px] text-muted-foreground mt-1 pop-z-text leading-relaxed">{stat.description}</p>
             </CardContent>
           </Card>
         ))}

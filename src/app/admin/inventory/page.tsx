@@ -158,47 +158,47 @@ export default function AdminInventoryPage() {
 
       {/* Stats Cards */}
       {stats && (
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-          <Card className="shadow-sm border-border/80">
-            <CardContent className="p-4 flex items-center justify-between">
-              <div>
-                <p className="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-1">Total Products</p>
-                <p className="text-2xl font-black">{stats.totalMangoes}</p>
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4 card-3d-container">
+          <Card className="card-3d-hover preserve-3d glow-mango glow-mango-hover shadow-sm border-border/40 bg-card hover:border-amber-500/20 transition-all duration-300 rounded-2xl">
+            <CardContent className="p-5 flex items-center justify-between preserve-3d">
+              <div className="preserve-3d">
+                <p className="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-1 pop-z-text">Total Products</p>
+                <p className="text-2xl font-black pop-z-text">{stats.totalMangoes}</p>
               </div>
-              <div className="h-10 w-10 bg-primary/10 rounded-full flex items-center justify-center">
+              <div className="h-10 w-10 bg-primary/10 rounded-full flex items-center justify-center pop-z-text">
                 <Package className="h-5 w-5 text-primary" />
               </div>
             </CardContent>
           </Card>
-          <Card className="shadow-sm border-border/80">
-            <CardContent className="p-4 flex items-center justify-between">
-              <div>
-                <p className="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-1">Total Units</p>
-                <p className="text-2xl font-black">{stats.totalInventoryUnits}</p>
+          <Card className="card-3d-hover preserve-3d glow-mango glow-mango-hover shadow-sm border-border/40 bg-card hover:border-amber-500/20 transition-all duration-300 rounded-2xl">
+            <CardContent className="p-5 flex items-center justify-between preserve-3d">
+              <div className="preserve-3d">
+                <p className="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-1 pop-z-text">Total Units</p>
+                <p className="text-2xl font-black pop-z-text">{stats.totalInventoryUnits}</p>
               </div>
-              <div className="h-10 w-10 bg-blue-500/10 rounded-full flex items-center justify-center">
+              <div className="h-10 w-10 bg-blue-500/10 rounded-full flex items-center justify-center pop-z-text">
                 <Package className="h-5 w-5 text-blue-500" />
               </div>
             </CardContent>
           </Card>
-          <Card className="shadow-sm border-border/80">
-            <CardContent className="p-4 flex items-center justify-between">
-              <div>
-                <p className="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-1">Low Stock</p>
-                <p className="text-2xl font-black text-amber-500">{stats.lowStockItems}</p>
+          <Card className="card-3d-hover preserve-3d glow-mango glow-mango-hover shadow-sm border-border/40 bg-card hover:border-amber-500/20 transition-all duration-300 rounded-2xl">
+            <CardContent className="p-5 flex items-center justify-between preserve-3d">
+              <div className="preserve-3d">
+                <p className="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-1 pop-z-text">Low Stock</p>
+                <p className="text-2xl font-black text-amber-500 pop-z-text">{stats.lowStockItems}</p>
               </div>
-              <div className="h-10 w-10 bg-amber-500/10 rounded-full flex items-center justify-center">
+              <div className="h-10 w-10 bg-amber-500/10 rounded-full flex items-center justify-center pop-z-text">
                 <AlertTriangle className="h-5 w-5 text-amber-500" />
               </div>
             </CardContent>
           </Card>
-          <Card className="shadow-sm border-border/80">
-            <CardContent className="p-4 flex items-center justify-between">
-              <div>
-                <p className="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-1">Out of Stock</p>
-                <p className="text-2xl font-black text-rose-500">{stats.outOfStock}</p>
+          <Card className="card-3d-hover preserve-3d glow-mango glow-mango-hover shadow-sm border-border/40 bg-card hover:border-amber-500/20 transition-all duration-300 rounded-2xl">
+            <CardContent className="p-5 flex items-center justify-between preserve-3d">
+              <div className="preserve-3d">
+                <p className="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-1 pop-z-text">Out of Stock</p>
+                <p className="text-2xl font-black text-rose-500 pop-z-text">{stats.outOfStock}</p>
               </div>
-              <div className="h-10 w-10 bg-rose-500/10 rounded-full flex items-center justify-center">
+              <div className="h-10 w-10 bg-rose-500/10 rounded-full flex items-center justify-center pop-z-text">
                 <AlertCircle className="h-5 w-5 text-rose-500" />
               </div>
             </CardContent>
