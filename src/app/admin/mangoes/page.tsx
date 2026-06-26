@@ -268,67 +268,104 @@ export default function AdminMangoesPage() {
               <p className="text-sm text-muted-foreground">No mangoes found.</p>
             </div>
           ) : (
-            <div className="overflow-x-auto">
-              <table className="w-full text-xs">
-                <thead>
-                  <tr className="bg-secondary/40 border-b border-border">
-                    <th className="text-left px-4 py-3 font-bold uppercase tracking-wider text-muted-foreground">Image</th>
-                    <th className="text-left px-4 py-3 font-bold uppercase tracking-wider text-muted-foreground">Name</th>
-                    <th className="text-left px-4 py-3 font-bold uppercase tracking-wider text-muted-foreground">Variety</th>
-                    <th className="text-left px-4 py-3 font-bold uppercase tracking-wider text-muted-foreground">Price (PKR)</th>
-                    <th className="text-left px-4 py-3 font-bold uppercase tracking-wider text-muted-foreground">Stock</th>
-                    <th className="text-left px-4 py-3 font-bold uppercase tracking-wider text-muted-foreground">Status</th>
-                    <th className="text-left px-4 py-3 font-bold uppercase tracking-wider text-muted-foreground">Created</th>
-                    <th className="text-right px-4 py-3 font-bold uppercase tracking-wider text-muted-foreground">Actions</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-border/60">
-                  {mangoes.map((mango) => (
-                    <tr key={mango.id} className="hover:bg-secondary/20 transition-colors">
-                      <td className="px-4 py-3">
-                        <img src={mango.image} alt={mango.name} className="h-10 w-10 rounded-md object-cover bg-secondary" />
-                      </td>
-                      <td className="px-4 py-3 font-semibold text-foreground">{mango.name}</td>
-                      <td className="px-4 py-3 text-muted-foreground">{mango.variety?.name}</td>
-                      <td className="px-4 py-3 font-bold text-primary">Rs. {mango.price.toLocaleString()}</td>
-                      <td className="px-4 py-3">
-                        <span className={mango.stock === 0 ? 'text-destructive font-bold' : 'text-foreground'}>
-                          {mango.stock}
-                        </span>
-                      </td>
-                      <td className="px-4 py-3">
-                        <button
-                          onClick={() => handleToggleStatus(mango)}
-                          disabled={isPending}
-                          className="cursor-pointer"
-                        >
-                          <Badge variant={mango.isActive ? 'default' : 'secondary'} className={`text-[10px] px-2 py-0.5 ${mango.isActive ? 'bg-emerald-500/15 text-emerald-600 border-emerald-500/30' : 'bg-rose-500/15 text-rose-600 border-rose-500/30'}`}>
-                            <Power className="h-2.5 w-2.5 mr-1" />
+            <>
+              {/* Desktop table */}
+              <div className="hidden overflow-x-auto lg:block">
+                <table className="w-full text-xs">
+                  <thead>
+                    <tr className="border-b border-border bg-secondary/60">
+                      <th className="px-4 py-3 text-left font-bold uppercase tracking-wider text-muted-foreground">Image</th>
+                      <th className="px-4 py-3 text-left font-bold uppercase tracking-wider text-muted-foreground">Name</th>
+                      <th className="px-4 py-3 text-left font-bold uppercase tracking-wider text-muted-foreground">Variety</th>
+                      <th className="px-4 py-3 text-left font-bold uppercase tracking-wider text-muted-foreground">Price (PKR)</th>
+                      <th className="px-4 py-3 text-left font-bold uppercase tracking-wider text-muted-foreground">Stock</th>
+                      <th className="px-4 py-3 text-left font-bold uppercase tracking-wider text-muted-foreground">Status</th>
+                      <th className="px-4 py-3 text-left font-bold uppercase tracking-wider text-muted-foreground">Created</th>
+                      <th className="px-4 py-3 text-right font-bold uppercase tracking-wider text-muted-foreground">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {mangoes.map((mango) => (
+                      <tr key={mango.id} className="border-b border-border/50 transition-colors odd:bg-transparent even:bg-secondary/20 hover:bg-primary/5">
+                        <td className="px-4 py-3">
+                          <img src={mango.image} alt={mango.name} className="h-10 w-10 rounded-lg bg-secondary object-cover" />
+                        </td>
+                        <td className="px-4 py-3 font-semibold text-foreground">{mango.name}</td>
+                        <td className="px-4 py-3 text-muted-foreground">{mango.variety?.name}</td>
+                        <td className="px-4 py-3 font-bold text-primary">Rs. {mango.price.toLocaleString()}</td>
+                        <td className="px-4 py-3">
+                          <span className={mango.stock === 0 ? 'font-bold text-destructive' : 'text-foreground'}>
+                            {mango.stock}
+                          </span>
+                        </td>
+                        <td className="px-4 py-3">
+                          <button onClick={() => handleToggleStatus(mango)} disabled={isPending} className="cursor-pointer">
+                            <Badge variant={mango.isActive ? 'default' : 'secondary'} className={`text-[10px] px-2 py-0.5 ${mango.isActive ? 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border-emerald-500/30' : 'bg-rose-500/15 text-rose-600 dark:text-rose-400 border-rose-500/30'}`}>
+                              <Power className="mr-1 h-2.5 w-2.5" />
+                              {mango.isActive ? 'Active' : 'Inactive'}
+                            </Badge>
+                          </button>
+                        </td>
+                        <td className="px-4 py-3 text-muted-foreground">{new Date(mango.createdAt).toLocaleDateString()}</td>
+                        <td className="px-4 py-3">
+                          <div className="flex items-center justify-end gap-1">
+                            <Button variant="ghost" size="icon" className="h-7 w-7 cursor-pointer" onClick={() => openViewModal(mango)} aria-label="View">
+                              <Eye className="h-3.5 w-3.5 text-muted-foreground" />
+                            </Button>
+                            <Button variant="ghost" size="icon" className="h-7 w-7 cursor-pointer" onClick={() => openEditModal(mango)} aria-label="Edit">
+                              <Pencil className="h-3.5 w-3.5 text-muted-foreground" />
+                            </Button>
+                            <Button variant="ghost" size="icon" className="h-7 w-7 cursor-pointer" onClick={() => setDeleteTarget(mango)} aria-label="Delete">
+                              <Trash2 className="h-3.5 w-3.5 text-destructive" />
+                            </Button>
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+
+              {/* Mobile cards */}
+              <div className="space-y-3 p-3 lg:hidden">
+                {mangoes.map((mango) => (
+                  <div key={mango.id} className="flex gap-3 rounded-2xl border border-border/60 bg-card p-3 shadow-sm">
+                    <img src={mango.image} alt={mango.name} className="h-16 w-16 shrink-0 rounded-xl bg-secondary object-cover" />
+                    <div className="min-w-0 flex-1">
+                      <div className="flex items-start justify-between gap-2">
+                        <div className="min-w-0">
+                          <h3 className="truncate text-sm font-bold text-foreground">{mango.name}</h3>
+                          <p className="text-[11px] text-muted-foreground">{mango.variety?.name}</p>
+                        </div>
+                        <button onClick={() => handleToggleStatus(mango)} disabled={isPending} className="cursor-pointer">
+                          <Badge variant={mango.isActive ? 'default' : 'secondary'} className={`text-[9px] px-1.5 py-0.5 ${mango.isActive ? 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border-emerald-500/30' : 'bg-rose-500/15 text-rose-600 dark:text-rose-400 border-rose-500/30'}`}>
+                            <Power className="mr-0.5 h-2.5 w-2.5" />
                             {mango.isActive ? 'Active' : 'Inactive'}
                           </Badge>
                         </button>
-                      </td>
-                      <td className="px-4 py-3 text-muted-foreground">
-                        {new Date(mango.createdAt).toLocaleDateString()}
-                      </td>
-                      <td className="px-4 py-3">
-                        <div className="flex items-center justify-end gap-1">
-                          <Button variant="ghost" size="icon" className="h-7 w-7 cursor-pointer" onClick={() => openViewModal(mango)}>
-                            <Eye className="h-3.5 w-3.5 text-muted-foreground" />
-                          </Button>
-                          <Button variant="ghost" size="icon" className="h-7 w-7 cursor-pointer" onClick={() => openEditModal(mango)}>
-                            <Pencil className="h-3.5 w-3.5 text-muted-foreground" />
-                          </Button>
-                          <Button variant="ghost" size="icon" className="h-7 w-7 cursor-pointer" onClick={() => setDeleteTarget(mango)}>
-                            <Trash2 className="h-3.5 w-3.5 text-destructive" />
-                          </Button>
-                        </div>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+                      </div>
+                      <div className="mt-1.5 flex items-center justify-between">
+                        <span className="text-sm font-black text-primary">Rs. {mango.price.toLocaleString()}</span>
+                        <span className={`text-[11px] font-semibold ${mango.stock === 0 ? 'text-destructive' : 'text-muted-foreground'}`}>
+                          Stock: {mango.stock}
+                        </span>
+                      </div>
+                      <div className="mt-2 flex items-center gap-1.5">
+                        <Button variant="outline" size="xs" className="h-7 flex-1 cursor-pointer text-[10px] font-bold" onClick={() => openViewModal(mango)}>
+                          <Eye className="mr-1 h-3 w-3" /> View
+                        </Button>
+                        <Button variant="outline" size="xs" className="h-7 flex-1 cursor-pointer text-[10px] font-bold" onClick={() => openEditModal(mango)}>
+                          <Pencil className="mr-1 h-3 w-3" /> Edit
+                        </Button>
+                        <Button variant="outline" size="xs" className="h-7 cursor-pointer px-2 text-destructive hover:bg-destructive/10" onClick={() => setDeleteTarget(mango)} aria-label="Delete">
+                          <Trash2 className="h-3 w-3" />
+                        </Button>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </>
           )}
         </CardContent>
       </Card>

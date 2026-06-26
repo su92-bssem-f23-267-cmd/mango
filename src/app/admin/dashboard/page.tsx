@@ -1,145 +1,110 @@
 import db from '@/lib/db'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Users, ShoppingBag, CreditCard, DollarSign, Leaf, CheckCircle, XCircle, AlertTriangle, Tags, AlertCircle, Clock, Truck } from 'lucide-react'
+import {
+  Users, ShoppingBag, DollarSign, Leaf, CheckCircle, XCircle, AlertTriangle,
+  Tags, AlertCircle, Clock, Truck, Wallet, CalendarDays, Boxes, PackageCheck, Send,
+} from 'lucide-react'
+import StatCard from '@/components/admin/StatCard'
+import OrdersDonut from '@/components/admin/OrdersDonut'
 
 export default async function AdminDashboardPage() {
+  const now = new Date()
+  const startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate())
+  const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1)
+
   const [
     userCount,
     totalOrders,
     pendingOrders,
     approvedOrders,
+    dispatchedOrders,
     rejectedOrders,
     deliveredOrders,
     revenueResult,
+    todayOrders,
+    monthlySalesResult,
     totalMangoes,
     activeMangoes,
-    inactiveMangoes,
     outOfStockMangoes,
     totalVarieties,
-    activeVarieties,
-    inactiveVarieties,
-    totalMangoesLinked,
     lowStockProducts,
-    outOfStockProducts
+    outOfStockProducts,
   ] = await Promise.all([
     db.user.count(),
     db.order.count(),
     db.order.count({ where: { status: 'PENDING' } }),
     db.order.count({ where: { status: 'APPROVED' } }),
+    db.order.count({ where: { status: 'DISPATCHED' } }),
     db.order.count({ where: { status: 'REJECTED' } }),
     db.order.count({ where: { status: 'DELIVERED' } }),
     db.order.aggregate({
       where: { status: 'DELIVERED' },
-      _sum: {
-        totalAmount: true
-      }
+      _sum: { totalAmount: true },
+    }),
+    db.order.count({ where: { createdAt: { gte: startOfToday } } }),
+    db.order.aggregate({
+      where: { status: 'DELIVERED', createdAt: { gte: startOfMonth } },
+      _sum: { totalAmount: true },
     }),
     db.mango.count(),
     db.mango.count({ where: { isActive: true } }),
-    db.mango.count({ where: { isActive: false } }),
     db.mango.count({ where: { stock: 0 } }),
     db.variety.count(),
-    db.variety.count({ where: { isActive: true } }),
-    db.variety.count({ where: { isActive: false } }),
-    db.mango.count({ where: { varietyId: { not: '' } } }),
     db.mango.findMany({ where: { stock: { gt: 0, lte: 10 } }, select: { name: true, stock: true } }),
-    db.mango.findMany({ where: { stock: 0 }, select: { name: true } })
+    db.mango.findMany({ where: { stock: 0 }, select: { name: true } }),
   ])
 
   const totalRevenue = revenueResult._sum.totalAmount ? Number(revenueResult._sum.totalAmount) : 0
+  const monthlySales = monthlySalesResult._sum.totalAmount ? Number(monthlySalesResult._sum.totalAmount) : 0
+  const fmt = (n: number) => `Rs. ${n.toLocaleString()}`
 
-  const orderStats = [
-    {
-      title: 'Total Revenue (COD)',
-      value: `Rs. ${totalRevenue.toLocaleString()}`,
-      description: 'Delivered orders cash collected',
-      icon: DollarSign,
-      color: 'text-emerald-500 bg-emerald-500/10'
-    },
-    {
-      title: 'Total Orders',
-      value: totalOrders.toString(),
-      description: 'Total orders placed',
-      icon: ShoppingBag,
-      color: 'text-blue-500 bg-blue-500/10'
-    },
-    {
-      title: 'Pending Orders',
-      value: pendingOrders.toString(),
-      description: 'Awaiting admin approval',
-      icon: Clock,
-      color: 'text-amber-500 bg-amber-500/10'
-    },
-    {
-      title: 'Approved Orders',
-      value: approvedOrders.toString(),
-      description: 'Approved & preparing harvest',
-      icon: CheckCircle,
-      color: 'text-sky-500 bg-sky-500/10'
-    },
-    {
-      title: 'Delivered Orders',
-      value: deliveredOrders.toString(),
-      description: 'Successfully delivered COD',
-      icon: Truck,
-      color: 'text-emerald-500 bg-emerald-500/10'
-    },
-    {
-      title: 'Rejected Orders',
-      value: rejectedOrders.toString(),
-      description: 'Cancelled or rejected harvest',
-      icon: XCircle,
-      color: 'text-rose-500 bg-rose-500/10'
-    }
-  ]
-
-  const storeMetrics = [
-    {
-      title: 'Registered Users',
-      value: userCount.toString(),
-      description: 'Customer accounts',
-      icon: Users,
-      color: 'text-purple-500 bg-purple-500/10'
-    },
-    {
-      title: 'Total Mangoes',
-      value: totalMangoes.toString(),
-      description: 'Mango varieties listed',
-      icon: Leaf,
-      color: 'text-amber-500 bg-amber-500/10'
-    }
+  const donutSegments = [
+    { label: 'Pending', value: pendingOrders, color: 'bg-amber-500', stroke: '#F59E0B' },
+    { label: 'Approved', value: approvedOrders, color: 'bg-sky-500', stroke: '#0EA5E9' },
+    { label: 'Dispatched', value: dispatchedOrders, color: 'bg-violet-500', stroke: '#8B5CF6' },
+    { label: 'Delivered', value: deliveredOrders, color: 'bg-emerald-500', stroke: '#22C55E' },
+    { label: 'Rejected', value: rejectedOrders, color: 'bg-rose-500', stroke: '#F43F5E' },
   ]
 
   return (
-    <div className="space-y-8">
-      <div>
-        <h1 className="text-2xl font-black text-primary tracking-tight md:text-3xl">Admin Dashboard</h1>
-        <p className="text-xs text-muted-foreground mt-1">Real-time overview of Fruit Gala performance and COD orders.</p>
+    <div className="space-y-7">
+      {/* Page header */}
+      <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+        <div>
+          <h1 className="text-2xl font-black tracking-tight text-foreground md:text-3xl">Dashboard</h1>
+          <p className="mt-1 text-xs text-muted-foreground">Real-time overview of Fruit Gala performance and COD orders.</p>
+        </div>
+        <span className="inline-flex w-fit items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3 py-1.5 text-[11px] font-bold text-emerald-600 dark:text-emerald-400">
+          <span className="relative flex h-2 w-2">
+            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-500 opacity-75" />
+            <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
+          </span>
+          Live data
+        </span>
       </div>
 
       {/* Alerts */}
       {(lowStockProducts.length > 0 || outOfStockProducts.length > 0) && (
         <div className="grid gap-4 md:grid-cols-2">
           {outOfStockProducts.length > 0 && (
-            <div className="p-4 border border-rose-500/30 bg-rose-500/10 rounded-xl flex gap-3 shadow-sm">
-              <AlertCircle className="h-5 w-5 text-rose-500 shrink-0 mt-0.5" />
+            <div className="flex gap-3 rounded-2xl border border-rose-500/30 bg-rose-500/10 p-4 shadow-sm">
+              <AlertCircle className="mt-0.5 h-5 w-5 shrink-0 text-rose-500" />
               <div>
-                <h3 className="text-sm font-bold text-rose-500 tracking-tight">Out of Stock Alerts</h3>
-                <p className="text-xs text-rose-600/80 mt-1">The following boxes have 0 stock:</p>
-                <ul className="mt-2 text-xs font-semibold text-rose-600 list-disc list-inside">
-                  {outOfStockProducts.map(p => <li key={p.name}>{p.name}</li>)}
+                <h3 className="text-sm font-bold tracking-tight text-rose-600 dark:text-rose-400">Out of Stock Alerts</h3>
+                <p className="mt-1 text-xs text-rose-600/80 dark:text-rose-400/80">The following boxes have 0 stock:</p>
+                <ul className="mt-2 list-inside list-disc text-xs font-semibold text-rose-600 dark:text-rose-400">
+                  {outOfStockProducts.map((p) => <li key={p.name}>{p.name}</li>)}
                 </ul>
               </div>
             </div>
           )}
           {lowStockProducts.length > 0 && (
-            <div className="p-4 border border-amber-500/30 bg-amber-500/10 rounded-xl flex gap-3 shadow-sm">
-              <AlertTriangle className="h-5 w-5 text-amber-500 shrink-0 mt-0.5" />
+            <div className="flex gap-3 rounded-2xl border border-amber-500/30 bg-amber-500/10 p-4 shadow-sm">
+              <AlertTriangle className="mt-0.5 h-5 w-5 shrink-0 text-amber-500" />
               <div>
-                <h3 className="text-sm font-bold text-amber-500 tracking-tight">Low Stock Alerts</h3>
-                <p className="text-xs text-amber-600/80 mt-1">The following boxes have 10 or fewer items remaining:</p>
-                <ul className="mt-2 text-xs font-semibold text-amber-600 list-disc list-inside">
-                  {lowStockProducts.map(p => <li key={p.name}>{p.name} <span className="text-amber-500/70">({p.stock} left)</span></li>)}
+                <h3 className="text-sm font-bold tracking-tight text-amber-600 dark:text-amber-400">Low Stock Alerts</h3>
+                <p className="mt-1 text-xs text-amber-600/80 dark:text-amber-400/80">10 or fewer items remaining:</p>
+                <ul className="mt-2 list-inside list-disc text-xs font-semibold text-amber-600 dark:text-amber-400">
+                  {lowStockProducts.map((p) => <li key={p.name}>{p.name} <span className="text-amber-500/70">({p.stock} left)</span></li>)}
                 </ul>
               </div>
             </div>
@@ -147,43 +112,40 @@ export default async function AdminDashboardPage() {
         </div>
       )}
 
-      {/* Order Stats Grid */}
-      <div className="card-3d-container">
-        <h2 className="text-lg font-bold text-foreground tracking-tight mb-3">📦 Order Statistics</h2>
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {orderStats.map((stat) => (
-            <Card key={stat.title} className="card-3d-hover preserve-3d glow-mango glow-mango-hover shadow-sm border-border/40 bg-card hover:border-amber-500/20 transition-all duration-300 rounded-2xl">
-              <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0 preserve-3d">
-                <CardTitle className="text-xs font-bold uppercase tracking-wider text-muted-foreground pop-z-text">{stat.title}</CardTitle>
-                <div className={`p-2.5 rounded-xl shadow-sm ${stat.color} pop-z-text`}>
-                  <stat.icon className="h-4 w-4" />
-                </div>
-              </CardHeader>
-              <CardContent className="preserve-3d pt-2">
-                <div className="text-2xl font-black tracking-tight text-foreground pop-z-text">{stat.value}</div>
-                <p className="text-[10px] text-muted-foreground mt-1 pop-z-text leading-relaxed">{stat.description}</p>
-              </CardContent>
-            </Card>
-          ))}
+      {/* Highlight KPIs */}
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
+        <StatCard highlight index={0} title="Total Revenue" value={fmt(totalRevenue)} description="Delivered COD collected" icon={DollarSign} tone="emerald" />
+        <StatCard highlight index={1} title="Monthly Sales" value={fmt(monthlySales)} description="Delivered this month" icon={Wallet} tone="green" badge="This month" />
+        <StatCard highlight index={2} title="Total Orders" value={totalOrders} description="All orders placed" icon={ShoppingBag} tone="blue" />
+        <StatCard highlight index={3} title="Today's Orders" value={todayOrders} description="Placed since midnight" icon={CalendarDays} tone="amber" badge="Today" />
+      </div>
+
+      {/* Orders Overview + status cards */}
+      <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
+        <div className="reveal-up rounded-2xl border border-border/50 bg-card p-5 shadow-sm lg:col-span-1">
+          <h2 className="mb-4 text-sm font-black tracking-tight text-foreground">Orders Overview</h2>
+          <OrdersDonut segments={donutSegments} centerLabel="Orders" />
+        </div>
+
+        <div className="grid grid-cols-2 gap-4 lg:col-span-2 xl:grid-cols-3">
+          <StatCard index={0} title="Pending" value={pendingOrders} description="Awaiting approval" icon={Clock} tone="amber" />
+          <StatCard index={1} title="Approved" value={approvedOrders} description="Preparing harvest" icon={CheckCircle} tone="sky" />
+          <StatCard index={2} title="Dispatched" value={dispatchedOrders} description="On the way" icon={Send} tone="violet" />
+          <StatCard index={3} title="Delivered" value={deliveredOrders} description="Completed COD" icon={Truck} tone="emerald" />
+          <StatCard index={4} title="Rejected" value={rejectedOrders} description="Cancelled orders" icon={XCircle} tone="rose" />
+          <StatCard index={5} title="Customers" value={userCount} description="Registered accounts" icon={Users} tone="violet" />
         </div>
       </div>
 
-      {/* Catalog Stats */}
-      <div className="grid gap-4 md:grid-cols-2 card-3d-container">
-        {storeMetrics.map((stat) => (
-          <Card key={stat.title} className="card-3d-hover preserve-3d glow-mango glow-mango-hover shadow-sm border-border/40 bg-card hover:border-amber-500/20 transition-all duration-300 rounded-2xl">
-            <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0 preserve-3d">
-              <CardTitle className="text-xs font-bold uppercase tracking-wider text-muted-foreground pop-z-text">{stat.title}</CardTitle>
-              <div className={`p-2.5 rounded-xl shadow-sm ${stat.color} pop-z-text`}>
-                <stat.icon className="h-4 w-4" />
-              </div>
-            </CardHeader>
-            <CardContent className="preserve-3d pt-2">
-              <div className="text-2xl font-black tracking-tight text-foreground pop-z-text">{stat.value}</div>
-              <p className="text-[10px] text-muted-foreground mt-1 pop-z-text leading-relaxed">{stat.description}</p>
-            </CardContent>
-          </Card>
-        ))}
+      {/* Catalog */}
+      <div>
+        <h2 className="mb-3 text-sm font-black tracking-tight text-foreground">Catalog</h2>
+        <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
+          <StatCard index={0} title="Total Products" value={totalMangoes} description={`${activeMangoes} active`} icon={Leaf} tone="green" />
+          <StatCard index={1} title="Varieties" value={totalVarieties} description="Listed categories" icon={Tags} tone="amber" />
+          <StatCard index={2} title="In Stock" value={totalMangoes - outOfStockMangoes} description="Available products" icon={PackageCheck} tone="emerald" />
+          <StatCard index={3} title="Out of Stock" value={outOfStockMangoes} description="Need restocking" icon={Boxes} tone="rose" />
+        </div>
       </div>
     </div>
   )
